@@ -474,7 +474,7 @@ public class FileDisplayActivity extends HookActivity
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(intent.getAction()!=null && intent.getAction().equalsIgnoreCase(ACTION_DETAILS)){
+        if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(ACTION_DETAILS)) {
             setIntent(intent);
             setFile(intent.getParcelableExtra(EXTRA_FILE));
         }
@@ -590,6 +590,7 @@ public class FileDisplayActivity extends HookActivity
 
         if (fileListFragment != null) {
             fileListFragment.setSearchFragment(false);
+            fileListFragment.setFabEnabled(true);
         }
     }
 
@@ -746,12 +747,14 @@ public class FileDisplayActivity extends HookActivity
             case android.R.id.home: {
                 FileFragment second = getSecondFragment();
                 OCFile currentDir = getCurrentDir();
-                if (isDrawerOpen()) {
+                if (searchView != null && searchView.isFocused()) {
+                    searchView.clearFocus();
+                    break;
+                } else if (isDrawerOpen()) {
                     closeDrawer();
                 } else if ((currentDir != null && currentDir.getParentId() != 0) ||
                         (second != null && second.getFile() != null) || isSearchOpen()) {
                     onBackPressed();
-
                 } else {
                     openDrawer();
                 }
@@ -1021,6 +1024,9 @@ public class FileDisplayActivity extends HookActivity
             searchView.setQuery("", true);
             searchView.onActionViewCollapsed();
             setDrawerIndicatorEnabled(isDrawerIndicatorAvailable());
+            resetSearchView();
+            refreshListOfFilesFragment(true);
+
         } else if (isDrawerOpen && isFabOpen) {
             // close drawer first
             super.onBackPressed();
@@ -1034,10 +1040,10 @@ public class FileDisplayActivity extends HookActivity
             // all closed
 
             //if PreviewImageActivity called this activity and mDualPane==false  then calls PreviewImageActivity again
-            if((getIntent().getAction()!=null && getIntent().getAction().equalsIgnoreCase(ACTION_DETAILS)) && !mDualPane){
-                    getIntent().setAction(null);
-                    getIntent().putExtra(EXTRA_FILE, (OCFile) null);
-                    startImagePreview(getFile());
+            if ((getIntent().getAction() != null && getIntent().getAction().equalsIgnoreCase(ACTION_DETAILS)) && !mDualPane) {
+                getIntent().setAction(null);
+                getIntent().putExtra(EXTRA_FILE, (OCFile) null);
+                startImagePreview(getFile());
             }
 
             OCFileListFragment listOfFiles = getListOfFilesFragment();
@@ -2091,13 +2097,20 @@ public class FileDisplayActivity extends HookActivity
 
     private void refreshList(boolean ignoreETag) {
         OCFileListFragment listOfFiles = getListOfFilesFragment();
-        if (listOfFiles != null && !listOfFiles.getIsSearchFragment()) {
+        if (listOfFiles != null && !listOfFiles.getIsSearchFragment() && (searchView == null ||
+                TextUtils.isEmpty(searchView.getQuery()))) {
             OCFile folder = listOfFiles.getCurrentFile();
             if (folder != null) {
                 /*mFile = mContainerActivity.getStorageManager().getFileById(mFile.getFileId());
                 listDirectory(mFile);*/
                 startSyncFolderOperation(folder, ignoreETag);
             }
+        } else if (searchView != null && !TextUtils.isEmpty(searchView.getQuery())) {
+            searchView.setQuery(searchView.getQuery(), true);
+            if (listOfFiles != null) {
+                listOfFiles.onQueryTextSubmit(searchView.getQuery().toString());
+            }
+
         }
     }
 
