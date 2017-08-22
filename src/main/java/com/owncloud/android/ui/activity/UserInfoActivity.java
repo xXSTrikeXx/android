@@ -32,22 +32,30 @@ import android.app.FragmentManager;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
 import com.owncloud.android.R;
 import com.owncloud.android.authentication.AccountUtils;
@@ -55,7 +63,6 @@ import com.owncloud.android.authentication.AuthenticatorActivity;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.PushConfigurationState;
 import com.owncloud.android.datamodel.SyncedFolderProvider;
-import com.owncloud.android.datamodel.UploadsStorageManager;
 import com.owncloud.android.lib.common.UserInfo;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
@@ -64,6 +71,7 @@ import com.owncloud.android.lib.resources.users.GetRemoteUserInfoOperation;
 import com.owncloud.android.ui.events.TokenPushEvent;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.PushUtils;
+import com.owncloud.android.utils.ThemeUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -187,11 +195,15 @@ public class UserInfoActivity extends FileActivity {
         setContentView(R.layout.user_info_layout);
         unbinder = ButterKnife.bind(this);
 
-        setupToolbar();
-        updateActionBarTitleAndHomeButtonByString("");
-
         setAccount(AccountUtils.getCurrentOwnCloudAccount(this));
         onAccountSet(false);
+
+        boolean useBackgroundImage = URLUtil.isValidUrl(
+                getStorageManager().getCapability(account.name).getServerBackground());
+
+        setupToolbar(useBackgroundImage);
+        updateActionBarTitleAndHomeButtonByString("");
+
 
         if (userInfo != null) {
             populateUserInfoUi(userInfo);
@@ -201,6 +213,8 @@ public class UserInfoActivity extends FileActivity {
             setMultiListLoadingMessage();
             fetchAndSetData();
         }
+
+        setHeaderImage();
     }
 
     @Override
@@ -242,6 +256,8 @@ public class UserInfoActivity extends FileActivity {
             emptyContentMessage.setText("");
 
             emptyContentIcon.setVisibility(View.GONE);
+            multiListProgressBar.getIndeterminateDrawable().setColorFilter(ThemeUtils.primaryColor(),
+                    PorterDuff.Mode.SRC_IN);
             multiListProgressBar.setVisibility(View.VISIBLE);
         }
     }
@@ -255,12 +271,48 @@ public class UserInfoActivity extends FileActivity {
         }
     }
 
+    private void setHeaderImage() {
+        if (getStorageManager().getCapability(account.name).getServerBackground() != null) {
+            final AppBarLayout appBar = (AppBarLayout) findViewById(R.id.appbar);
+
+            if (appBar != null) {
+                String background = getStorageManager().getCapability(account.name).getServerBackground();
+
+                if (URLUtil.isValidUrl(background)) {
+                    // background image
+                    SimpleTarget target = new SimpleTarget<Drawable>() {
+                        @Override
+                        public void onResourceReady(Drawable resource, GlideAnimation glideAnimation) {
+                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                                appBar.setBackgroundDrawable(resource);
+                            } else {
+                                appBar.setBackground(resource);
+                            }
+                        }
+                    };
+
+                    Glide.with(this)
+                            .load(background)
+                            .centerCrop()
+                            .placeholder(R.drawable.background)
+                            .error(R.drawable.background)
+                            .crossFade()
+                            .into(target);
+                } else if (!background.isEmpty()) {
+                    // plain color
+                    int color = Color.parseColor(background);
+                    appBar.setBackgroundColor(color);
+                }
+            }
+        }
+    }
+
     private void populateUserInfoUi(UserInfo userInfo) {
         userName.setText(account.name);
         DisplayUtils.setAvatar(account, UserInfoActivity.this,
-                mCurrentAccountAvatarRadiusDimension, getResources(), getStorageManager(),avatar);
+                mCurrentAccountAvatarRadiusDimension, getResources(), getStorageManager(), avatar);
 
-        int tint = ContextCompat.getColor(this, R.color.primary);
+        int tint = ThemeUtils.primaryColor(account);
 
         if (userInfo != null) {
             if (!TextUtils.isEmpty(userInfo.getDisplayName())) {
@@ -357,16 +409,11 @@ public class UserInfoActivity extends FileActivity {
                                             contentResolver);
                                     syncedFolderProvider.deleteSyncFoldersForAccount(account);
 
-                                    UploadsStorageManager uploadsStorageManager = new UploadsStorageManager(
-                                            contentResolver, getActivity());
-                                    uploadsStorageManager.cancelPendingAutoUploadJobsForAccount(account);
-                                    uploadsStorageManager.removeAccountUploads(account);
-
                                     // disable daily backup
                                     ArbitraryDataProvider arbitraryDataProvider = new ArbitraryDataProvider(
                                             contentResolver);
 
-                                    arbitraryDataProvider.storeOrUpdateKeyValue(account,
+                                    arbitraryDataProvider.storeOrUpdateKeyValue(account.name,
                                             ContactsPreferenceActivity.PREFERENCE_CONTACTS_AUTOMATIC_BACKUP,
                                             "false");
 
@@ -380,7 +427,7 @@ public class UserInfoActivity extends FileActivity {
                                         PushConfigurationState pushArbitraryData = gson.fromJson(arbitraryDataPushString,
                                                 PushConfigurationState.class);
                                         pushArbitraryData.setShouldBeDeleted(true);
-                                        arbitraryDataProvider.storeOrUpdateKeyValue(account, PushUtils.KEY_PUSH,
+                                        arbitraryDataProvider.storeOrUpdateKeyValue(account.name, PushUtils.KEY_PUSH,
                                                 gson.toJson(pushArbitraryData));
                                         EventBus.getDefault().post(new TokenPushEvent());
                                     }

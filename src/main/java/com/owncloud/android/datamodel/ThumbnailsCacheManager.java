@@ -30,6 +30,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -42,6 +43,7 @@ import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.lib.common.OwnCloudAccount;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
+import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.status.OwnCloudVersion;
 import com.owncloud.android.ui.adapter.DiskLruImageCache;
@@ -56,6 +58,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import java.io.File;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -183,13 +186,20 @@ public class ThumbnailsCacheManager {
     public static class ThumbnailGenerationTask extends AsyncTask<Object, Void, Bitmap> {
         private final WeakReference<ImageView> mImageViewReference;
         private static Account mAccount;
+        private ArrayList<ThumbnailGenerationTask> mAsyncTasks = null;
         private Object mFile;
         private String mImageKey = null;
         private FileDataStorageManager mStorageManager;
+        private GetMethod getMethod;
 
+        public ThumbnailGenerationTask(ImageView imageView, FileDataStorageManager storageManager, Account account)
+                throws IllegalArgumentException {
+            this(imageView, storageManager, account, null);
+        }
 
         public ThumbnailGenerationTask(ImageView imageView, FileDataStorageManager storageManager,
-                                       Account account) throws IllegalArgumentException {
+                                       Account account, ArrayList<ThumbnailGenerationTask> asyncTasks)
+                throws IllegalArgumentException {
             // Use a WeakReference to ensure the ImageView can be garbage collected
             mImageViewReference = new WeakReference<ImageView>(imageView);
             if (storageManager == null) {
@@ -197,6 +207,11 @@ public class ThumbnailsCacheManager {
             }
             mStorageManager = storageManager;
             mAccount = account;
+            mAsyncTasks = asyncTasks;
+        }
+
+        public GetMethod getGetMethod() {
+            return getMethod;
         }
 
         public ThumbnailGenerationTask(FileDataStorageManager storageManager, Account account){
@@ -277,6 +292,10 @@ public class ThumbnailsCacheManager {
                     }
                 }
             }
+
+            if (mAsyncTasks != null) {
+                mAsyncTasks.remove(this);
+            }
         }
 
         /**
@@ -325,18 +344,22 @@ public class ThumbnailsCacheManager {
                     OwnCloudVersion serverOCVersion = AccountUtils.getServerVersion(mAccount);
                     if (mClient != null && serverOCVersion != null) {
                         if (serverOCVersion.supportsRemoteThumbnails()) {
-                            GetMethod get = null;
+                            getMethod = null;
                             try {
                                 String uri = mClient.getBaseUri() + "" +
                                         "/index.php/apps/files/api/v1/thumbnail/" +
                                         px + "/" + px + Uri.encode(file.getRemotePath(), "/");
                                 Log_OC.d("Thumbnail", "URI: " + uri);
-                                get = new GetMethod(uri);
-                                get.setRequestHeader("Cookie",
+                                getMethod = new GetMethod(uri);
+                                getMethod.setRequestHeader("Cookie",
                                         "nc_sameSiteCookielax=true;nc_sameSiteCookiestrict=true");
-                                int status = mClient.executeMethod(get);
+
+                                getMethod.setRequestHeader(RemoteOperation.OCS_API_HEADER,
+                                        RemoteOperation.OCS_API_HEADER_VALUE);
+
+                                int status = mClient.executeMethod(getMethod);
                                 if (status == HttpStatus.SC_OK) {
-                                    InputStream inputStream = get.getResponseBodyAsStream();
+                                    InputStream inputStream = getMethod.getResponseBodyAsStream();
                                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                                     thumbnail = ThumbnailUtils.extractThumbnail(bitmap, px, px);
 
@@ -350,13 +373,13 @@ public class ThumbnailsCacheManager {
                                         addBitmapToCache(imageKey, thumbnail);
                                     }
                                 } else {
-                                    mClient.exhaustResponse(get.getResponseBodyAsStream());
+                                    mClient.exhaustResponse(getMethod.getResponseBodyAsStream());
                                 }
                             } catch (Exception e) {
                                 Log_OC.d(TAG, e.getMessage(), e);
                             } finally {
-                                if (get != null) {
-                                    get.releaseConnection();
+                                if (getMethod != null) {
+                                    getMethod.releaseConnection();
                                 }
                             }
                         } else {
@@ -401,6 +424,7 @@ public class ThumbnailsCacheManager {
     }
 
     public static class MediaThumbnailGenerationTask extends AsyncTask<Object, Void, Bitmap> {
+        private enum Type {IMAGE, VIDEO}
         private final WeakReference<ImageView> mImageViewReference;
         private File mFile;
         private String mImageKey = null;
@@ -422,7 +446,9 @@ public class ThumbnailsCacheManager {
                     }
 
                     if (MimeTypeUtil.isImage(mFile)) {
-                        thumbnail = doFileInBackground(mFile);
+                        thumbnail = doFileInBackground(mFile, Type.IMAGE);
+                    } else if (MimeTypeUtil.isVideo(mFile)) {
+                        thumbnail = doFileInBackground(mFile, Type.VIDEO);
                     }
                 }
             } // the app should never break due to a problem with thumbnails
@@ -457,7 +483,7 @@ public class ThumbnailsCacheManager {
                             if (MimeTypeUtil.isVideo(mFile)) {
                                 imageView.setImageBitmap(ThumbnailsCacheManager.mDefaultVideo);
                             } else {
-                                imageView.setImageResource(MimeTypeUtil.getFileTypeIconId(null, mFile.getName()));
+                                imageView.setImageDrawable(MimeTypeUtil.getFileTypeIcon(null, mFile.getName(), null));
                             }
                         }
                     }
@@ -465,7 +491,7 @@ public class ThumbnailsCacheManager {
             }
         }
 
-        private Bitmap doFileInBackground(File file) {
+        private Bitmap doFileInBackground(File file, Type type) {
             final String imageKey;
 
             if (mImageKey != null) {
@@ -480,14 +506,45 @@ public class ThumbnailsCacheManager {
             // Not found in disk cache
             if (thumbnail == null) {
 
-                int px = getThumbnailDimension();
+                if (Type.IMAGE.equals(type)) {
+                    int px = getThumbnailDimension();
 
-                Bitmap bitmap = BitmapUtils.decodeSampledBitmapFromFile(file.getAbsolutePath(), px, px);
+                    Bitmap bitmap = BitmapUtils.decodeSampledBitmapFromFile(file.getAbsolutePath(), px, px);
 
-                if (bitmap != null) {
-                    thumbnail = addThumbnailToCache(imageKey, bitmap, file.getPath(), px);
+                    if (bitmap != null) {
+                        thumbnail = addThumbnailToCache(imageKey, bitmap, file.getPath(), px);
+                    }
+                } else if (Type.VIDEO.equals(type)) {
+                    MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                    try {
+                        retriever.setDataSource(file.getAbsolutePath());
+                        thumbnail = retriever.getFrameAtTime(-1);
+                    } catch (Exception ex) {
+                        // can't create a bitmap
+                        Log_OC.w(TAG, "Failed to create bitmap from video " + file.getAbsolutePath());
+                    } finally {
+                        try {
+                            retriever.release();
+                        } catch (RuntimeException ex) {
+                            // Ignore failure at this point.
+                            Log_OC.w(TAG, "Failed release MediaMetadataRetriever for " + file.getAbsolutePath());
+                        }
+                    }
+
+                    if (thumbnail != null) {
+                        // Scale down bitmap if too large.
+                        int px = getThumbnailDimension();
+                        int width = thumbnail.getWidth();
+                        int height = thumbnail.getHeight();
+                        int max = Math.max(width, height);
+                        if (max > px) {
+                            thumbnail = BitmapUtils.scaleBitmap(thumbnail, px, width, height, max);
+                            thumbnail = addThumbnailToCache(imageKey, thumbnail, file.getPath(), px);
+                        }
+                    }
                 }
             }
+
             return thumbnail;
         }
     }

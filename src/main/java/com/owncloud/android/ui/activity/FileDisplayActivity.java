@@ -1,4 +1,4 @@
-/**
+/*
  * ownCloud Android client application
  *
  * @author Bartek Przybylski
@@ -56,6 +56,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.owncloud.android.MainApp;
@@ -97,11 +99,11 @@ import com.owncloud.android.ui.preview.PreviewMediaFragment;
 import com.owncloud.android.ui.preview.PreviewTextFragment;
 import com.owncloud.android.ui.preview.PreviewVideoActivity;
 import com.owncloud.android.utils.DataHolderUtil;
-import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.ErrorMessageAdapter;
 import com.owncloud.android.utils.MimeTypeUtil;
 import com.owncloud.android.utils.PermissionUtil;
 import com.owncloud.android.utils.PushUtils;
+import com.owncloud.android.utils.ThemeUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -247,7 +249,7 @@ public class FileDisplayActivity extends HookActivity
                             }
                         });
 
-                DisplayUtils.colorSnackbar(this, snackbar);
+                ThemeUtils.colorSnackbar(this, snackbar);
 
                 snackbar.show();
             } else {
@@ -280,9 +282,8 @@ public class FileDisplayActivity extends HookActivity
      */
     private void upgradeNotificationForInstantUpload() {
         // check for Android 6+ if legacy instant upload is activated --> disable + show info
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                (PreferenceManager.instantPictureUploadEnabled(this) ||
-                        PreferenceManager.instantPictureUploadEnabled(this))) {
+        if (PreferenceManager.instantPictureUploadEnabled(this) ||
+                        PreferenceManager.instantPictureUploadEnabled(this)) {
 
             // remove legacy shared preferences
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
@@ -301,14 +302,14 @@ public class FileDisplayActivity extends HookActivity
 
             // show info pop-up
             new AlertDialog.Builder(this, R.style.Theme_ownCloud_Dialog)
-                    .setTitle(R.string.drawer_folder_sync)
-                    .setMessage(R.string.folder_sync_new_info)
+                    .setTitle(R.string.drawer_synced_folders)
+                    .setMessage(R.string.synced_folders_new_info)
                     .setPositiveButton(R.string.drawer_open, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // show instant upload
-                            Intent folderSyncIntent = new Intent(getApplicationContext(), FolderSyncActivity.class);
+                            Intent syncedFoldersIntent = new Intent(getApplicationContext(), SyncedFoldersActivity.class);
                             dialog.dismiss();
-                            startActivity(folderSyncIntent);
+                            startActivity(syncedFoldersIntent);
                         }
                     })
                     .setNegativeButton(R.string.drawer_close, new DialogInterface.OnClickListener() {
@@ -316,7 +317,7 @@ public class FileDisplayActivity extends HookActivity
                             dialog.dismiss();
                         }
                     })
-                    .setIcon(R.drawable.nav_folder_sync)
+                    .setIcon(R.drawable.nav_synced_folders)
                     .show();
         }
     }
@@ -475,7 +476,7 @@ public class FileDisplayActivity extends HookActivity
         super.onNewIntent(intent);
         if(intent.getAction()!=null && intent.getAction().equalsIgnoreCase(ACTION_DETAILS)){
             setIntent(intent);
-            setFile((OCFile)intent.getParcelableExtra(EXTRA_FILE));
+            setFile(intent.getParcelableExtra(EXTRA_FILE));
         }
     }
 
@@ -485,7 +486,7 @@ public class FileDisplayActivity extends HookActivity
             if (file.isDown() && PreviewMediaFragment.canBePreviewed(file)) {
                 int startPlaybackPosition = getIntent().getIntExtra(PreviewVideoActivity.EXTRA_START_POSITION, 0);
                 boolean autoplay = getIntent().getBooleanExtra(PreviewVideoActivity.EXTRA_AUTOPLAY, true);
-                secondFragment = new PreviewMediaFragment(file, getAccount(), startPlaybackPosition, autoplay);
+                secondFragment = PreviewMediaFragment.newInstance(file, getAccount(), startPlaybackPosition, autoplay);
             } else if (file.isDown() && PreviewTextFragment.canBePreviewed(file)) {
                 secondFragment = null;
             } else {
@@ -660,6 +661,14 @@ public class FileDisplayActivity extends HookActivity
         final MenuItem item = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(item);
 
+        // hacky as no default way is provided
+        int fontColor = ThemeUtils.fontColor();
+        EditText editText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        editText.setHintTextColor(fontColor);
+        editText.setTextColor(fontColor);
+        ImageView searchClose = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        searchClose.setColorFilter(ThemeUtils.fontColor());
+
         // populate list of menu items to show/hide when drawer is opened/closed
         mDrawerMenuItemstoShowHideList = new ArrayList<>(4);
         mDrawerMenuItemstoShowHideList.add(menu.findItem(R.id.action_sort));
@@ -775,8 +784,13 @@ public class FileDisplayActivity extends HookActivity
                 }
                 break;
             }
+            case R.id.action_select_all: {
+                getListOfFilesFragment().selectAllFiles(true);
+                break;
+            }
             default:
                 retval = super.onOptionsItemSelected(item);
+                break;
         }
         return retval;
     }
@@ -900,7 +914,9 @@ public class FileDisplayActivity extends HookActivity
                     null,           // MIME type will be detected from file name
                     behaviour,
                     false,          // do not create parent folder if not existent
-                    UploadFileOperation.CREATED_BY_USER
+                    UploadFileOperation.CREATED_BY_USER,
+                    false,
+                    false
             );
 
         } else {
@@ -1020,6 +1036,7 @@ public class FileDisplayActivity extends HookActivity
             //if PreviewImageActivity called this activity and mDualPane==false  then calls PreviewImageActivity again
             if((getIntent().getAction()!=null && getIntent().getAction().equalsIgnoreCase(ACTION_DETAILS)) && !mDualPane){
                     getIntent().setAction(null);
+                    getIntent().putExtra(EXTRA_FILE, (OCFile) null);
                     startImagePreview(getFile());
             }
 
@@ -1063,14 +1080,23 @@ public class FileDisplayActivity extends HookActivity
         Log_OC.v(TAG, "onResume() start");
         super.onResume();
 
+        OCFile startFile = null;
+        if (getIntent() != null && getIntent().getParcelableExtra(EXTRA_FILE) != null) {
+            startFile = getIntent().getParcelableExtra(EXTRA_FILE);
+            setFile(startFile);
+        }
 
         revertBottomNavigationBarToAllFiles();
         // refresh list of files
 
         if (searchView != null && !TextUtils.isEmpty(searchQuery)) {
             searchView.setQuery(searchQuery, true);
-        } else if (getListOfFilesFragment() != null && !getListOfFilesFragment().getIsSearchFragment()) {
+        } else if (getListOfFilesFragment() != null && !getListOfFilesFragment().getIsSearchFragment()
+                && startFile == null) {
             refreshListOfFilesFragment(false);
+        } else {
+            getListOfFilesFragment().listDirectory(startFile, false, false);
+            updateActionBarTitleAndHomeButton(startFile);
         }
 
         // Listen for sync messages
@@ -1212,19 +1238,16 @@ public class FileDisplayActivity extends HookActivity
                             if (currentDir.getRemotePath().equals(synchFolderRemotePath)) {
                                 OCFileListFragment fileListFragment = getListOfFilesFragment();
                                 if (fileListFragment != null) {
-                                    fileListFragment.listDirectory(currentDir,
-                                            MainApp.isOnlyOnDevice(), false);
+                                    fileListFragment.listDirectory(currentDir, MainApp.isOnlyOnDevice(), false);
                                 }
                             }
                             setFile(currentFile);
                         }
 
                         mSyncInProgress = (!FileSyncAdapter.EVENT_FULL_SYNC_END.equals(event) &&
-                                !RefreshFolderOperation.EVENT_SINGLE_FOLDER_SHARES_SYNCED
-                                        .equals(event));
+                                !RefreshFolderOperation.EVENT_SINGLE_FOLDER_SHARES_SYNCED.equals(event));
 
-                        if (RefreshFolderOperation.EVENT_SINGLE_FOLDER_CONTENTS_SYNCED.
-                                equals(event) &&
+                        if (RefreshFolderOperation.EVENT_SINGLE_FOLDER_CONTENTS_SYNCED.equals(event) &&
                                 synchResult != null && !synchResult.isSuccess()) {
 
                             /// TODO refactor and make common
@@ -1259,7 +1282,12 @@ public class FileDisplayActivity extends HookActivity
                 // avoid app crashes after changing the serial id of RemoteOperationResult
                 // in owncloud library with broadcast notifications pending to process
                 removeStickyBroadcast(intent);
-                DataHolderUtil.getInstance().delete(intent.getStringExtra(FileSyncAdapter.EXTRA_RESULT));
+
+                try {
+                    DataHolderUtil.getInstance().delete(intent.getStringExtra(FileSyncAdapter.EXTRA_RESULT));
+                } catch (RuntimeException re) {
+                    // we did not send this intent, so ignoring
+                }
             }
         }
     }
@@ -1277,10 +1305,10 @@ public class FileDisplayActivity extends HookActivity
     private void setBackgroundText() {
         final OCFileListFragment ocFileListFragment = getListOfFilesFragment();
         if (ocFileListFragment != null) {
-            if (!mSyncInProgress) {
-                ocFileListFragment.setEmptyListMessage(ExtendedListFragment.SearchType.NO_SEARCH);
-            } else {
+            if (mSyncInProgress) {
                 ocFileListFragment.setEmptyListLoadingMessage();
+            } else {
+                ocFileListFragment.setEmptyListMessage(ExtendedListFragment.SearchType.NO_SEARCH);
             }
         } else {
             Log_OC.e(TAG, "OCFileListFragment is null");
@@ -1552,7 +1580,8 @@ public class FileDisplayActivity extends HookActivity
             // a new chance to get the mDownloadBinder through
             // getFileDownloadBinder() - THIS IS A MESS
             OCFileListFragment listOfFiles = getListOfFilesFragment();
-            if (listOfFiles != null) {
+            if (listOfFiles != null && (getIntent() == null ||
+                    (getIntent() != null && getIntent().getParcelableExtra(EXTRA_FILE) == null))) {
                 listOfFiles.listDirectory(MainApp.isOnlyOnDevice(), false);
             }
             FileFragment secondFragment = getSecondFragment();
@@ -1625,7 +1654,7 @@ public class FileDisplayActivity extends HookActivity
                     showDetails(file);
                 }
             }
-            invalidateOptionsMenu();
+            supportInvalidateOptionsMenu();
         }
     }
 
@@ -1656,7 +1685,7 @@ public class FileDisplayActivity extends HookActivity
             if (getStorageManager().getFileById(removedFile.getParentId()).equals(getCurrentDir())) {
                 refreshListOfFilesFragment(false);
             }
-            invalidateOptionsMenu();
+            supportInvalidateOptionsMenu();
         } else {
             if (result.isSslRecoverableException()) {
                 mLastSslUntrustedServerResult = result;
@@ -1774,7 +1803,7 @@ public class FileDisplayActivity extends HookActivity
         if (result.isSuccess() && operation.transferWasRequested()) {
             OCFile syncedFile = operation.getLocalFile();
             onTransferStateChanged(syncedFile, true, true);
-            invalidateOptionsMenu();
+            supportInvalidateOptionsMenu();
             refreshShowDetails();
         }
     }
@@ -1972,8 +2001,7 @@ public class FileDisplayActivity extends HookActivity
      *                              interactions.
      */
     public void startMediaPreview(OCFile file, int startPlaybackPosition, boolean autoplay) {
-        Fragment mediaFragment = new PreviewMediaFragment(file, getAccount(), startPlaybackPosition,
-                autoplay);
+        Fragment mediaFragment = PreviewMediaFragment.newInstance(file, getAccount(), startPlaybackPosition, autoplay);
         setSecondFragment(mediaFragment);
         updateFragmentsVisibility(true);
         updateActionBarTitleAndHomeButton(file);

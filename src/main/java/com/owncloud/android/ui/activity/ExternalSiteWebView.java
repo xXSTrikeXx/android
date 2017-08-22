@@ -21,7 +21,6 @@
 
 package com.owncloud.android.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -110,9 +109,9 @@ public class ExternalSiteWebView extends FileActivity {
         webSettings.setAllowFileAccess(false);
 
         // enable javascript
-        webview.getSettings().setJavaScriptEnabled(true);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
 
-        final Activity activity = this;
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         webview.setWebChromeClient(new WebChromeClient() {
@@ -123,7 +122,8 @@ public class ExternalSiteWebView extends FileActivity {
 
         webview.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                webview.loadData(DisplayUtils.getData(getResources().openRawResource(R.raw.custom_error)),"text/html; charset=UTF-8", null);
+                webview.loadData(DisplayUtils.getData(getResources().openRawResource(R.raw.custom_error)),
+                        "text/html; charset=UTF-8", null);
             }
         });
 

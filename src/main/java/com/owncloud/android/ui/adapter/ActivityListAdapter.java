@@ -1,4 +1,4 @@
-/**
+/*
  * Nextcloud Android client application
  *
  * @author Alejandro Bautista
@@ -24,10 +24,12 @@ import android.content.res.Resources;
 import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,14 +47,18 @@ import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
 import com.caverock.androidsvg.SVG;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
+import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.OwnCloudClient;
+import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.activities.models.Activity;
 import com.owncloud.android.lib.resources.activities.models.RichElement;
 import com.owncloud.android.lib.resources.activities.models.RichObject;
+import com.owncloud.android.lib.resources.files.FileUtils;
 import com.owncloud.android.ui.interfaces.ActivityListInterface;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.MimeTypeUtil;
+import com.owncloud.android.utils.ThemeUtils;
 import com.owncloud.android.utils.glide.CustomGlideStreamLoader;
 import com.owncloud.android.utils.svg.SvgDecoder;
 import com.owncloud.android.utils.svg.SvgDrawableTranscoder;
@@ -69,19 +75,23 @@ import java.util.List;
 
 public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final int HEADER_TYPE = 100;
-    public static final int ACTIVITY_TYPE = 101;
+    private static final int HEADER_TYPE = 100;
+    private static final int ACTIVITY_TYPE = 101;
     private final ActivityListInterface activityListInterface;
     private final int px;
+    private static final String TAG = ActivityListAdapter.class.getSimpleName();
     private OwnCloudClient mClient;
 
     private Context context;
+    private FileDataStorageManager storageManager;
     private List<Object> mValues;
 
-    public ActivityListAdapter(Context context, ActivityListInterface activityListInterface) {
+    public ActivityListAdapter(Context context, ActivityListInterface activityListInterface,
+                               FileDataStorageManager storageManager) {
         this.mValues = new ArrayList<>();
         this.context = context;
         this.activityListInterface = activityListInterface;
+        this.storageManager = storageManager;
         px = getThumbnailDimension();
     }
 
@@ -91,7 +101,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         String sTime = "";
         for (Object o : activityItems) {
             Activity activity = (Activity) o;
-            String time = null;
+            String time;
             if (activity.getDatetime() != null) {
                 time = DisplayUtils.getRelativeTimestamp(context,
                         activity.getDatetime().getTime()).toString();
@@ -172,21 +182,24 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 activityViewHolder.list.setVisibility(View.VISIBLE);
                 activityViewHolder.list.removeAllViews();
 
-                activityViewHolder.list.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int w = activityViewHolder.list.getMeasuredWidth();
+                activityViewHolder.list.post(() -> {
+                    int w = activityViewHolder.list.getMeasuredWidth();
+                    int elPxSize = px + 20;
+                    int totalColumnCount = (int) Math.floor(w / elPxSize);
 
-                        int elPxSize = px + 20;
-                        int totalColumnCount = (int) Math.floor(w / elPxSize);
+                    try {
                         activityViewHolder.list.setColumnCount(totalColumnCount);
+                    } catch (IllegalArgumentException e) {
+                        Log_OC.e(TAG, "error setting column count to " + totalColumnCount);
                     }
                 });
 
 
                 for (RichObject richObject : activity.getRichSubjectElement().getRichObjectList()) {
-                    ImageView imageView = createThumbnail(richObject);
-                    activityViewHolder.list.addView(imageView);
+                    if (richObject.getPath() != null) {
+                        ImageView imageView = createThumbnail(richObject);
+                        activityViewHolder.list.addView(imageView);
+                    }
                 }
 
             } else {
@@ -200,19 +213,22 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private ImageView createThumbnail(final RichObject richObject) {
-        OCFile file = new OCFile("/" + richObject.getPath());
-        file.setRemoteId(richObject.getId());
+        String path = FileUtils.PATH_SEPARATOR + richObject.getPath();
+        OCFile file = storageManager.getFileByPath(path);
+
+        if (file == null) {
+            file = storageManager.getFileByPath(path + FileUtils.PATH_SEPARATOR);
+        }
+        if (file == null) {
+            file = new OCFile(path);
+            file.setRemoteId(richObject.getId());
+        }
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(px, px);
         params.setMargins(10, 10, 10, 10);
         ImageView imageView = new ImageView(context);
         imageView.setLayoutParams(params);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activityListInterface.onActivityClicked(richObject);
-            }
-        });
+        imageView.setOnClickListener(v -> activityListInterface.onActivityClicked(richObject));
         setBitmap(file, imageView);
 
         return imageView;
@@ -222,24 +238,28 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         // No Folder
         if (!file.isFolder()) {
             if ((MimeTypeUtil.isImage(file) || MimeTypeUtil.isVideo(file))) {
-                String uri = mClient.getBaseUri() + "" +
-                        "/index.php/apps/files/api/v1/thumbnail/" +
-                        px + "/" + px + Uri.encode(file.getRemotePath(), "/");
+                int placeholder;
 
-                Glide.with(context).using(new CustomGlideStreamLoader()).load(uri).into(fileIcon); //Using custom fetcher
+                if (MimeTypeUtil.isImage(file)) {
+                    placeholder = R.drawable.file_image;
+                } else {
+                    placeholder = R.drawable.file_movie;
+                }
+
+                String uri = mClient.getBaseUri() + "/index.php/apps/files/api/v1/thumbnail/" + px + "/" + px +
+                        Uri.encode(file.getRemotePath(), "/");
+
+                Glide.with(context).using(new CustomGlideStreamLoader()).load(uri).placeholder(placeholder)
+                        .error(placeholder).into(fileIcon); // using custom fetcher
 
             } else {
-                fileIcon.setImageResource(MimeTypeUtil.getFileTypeIconId(file.getMimetype(),
-                        file.getFileName()));
+                fileIcon.setImageDrawable(MimeTypeUtil.getFileTypeIcon(file.getMimetype(), file.getFileName(), null));
             }
         } else {
             // Folder
             fileIcon.setImageDrawable(
-                    MimeTypeUtil.getFolderTypeIcon(
-                            file.isSharedWithMe() || file.isSharedWithSharee(),
-                            file.isSharedViaLink()
-                    )
-            );
+                    MimeTypeUtil.getFolderTypeIcon(file.isSharedWithMe() || file.isSharedWithSharee(),
+                            file.isSharedViaLink()));
         }
     }
 
@@ -255,8 +275,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 .placeholder(R.drawable.ic_activity)
                 .error(R.drawable.ic_activity)
                 .animate(android.R.anim.fade_in)
-                .listener(new SvgSoftwareLayerSetter<Uri>());
-
+                .listener(new SvgSoftwareLayerSetter<>());
 
         Uri uri = Uri.parse(icon);
         requestBuilder
@@ -287,6 +306,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
                 }, idx1, idx2, 0);
                 ssb.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), idx1, idx2, 0);
+                ssb.setSpan(new ForegroundColorSpan(ThemeUtils.primaryAccentColor()), idx1, idx2,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             idx1 = text.indexOf("{", idx2);
         }
@@ -294,7 +315,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return ssb;
     }
 
-    public RichObject searchObjectByName(ArrayList<RichObject> richObjectList, String name) {
+    private RichObject searchObjectByName(ArrayList<RichObject> richObjectList, String name) {
         for (RichObject richObject : richObjectList) {
             if (richObject.getTag().equalsIgnoreCase(name))
                 return richObject;

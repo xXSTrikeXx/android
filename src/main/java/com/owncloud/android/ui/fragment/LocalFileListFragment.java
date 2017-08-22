@@ -21,10 +21,13 @@
 package com.owncloud.android.ui.fragment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -37,6 +40,7 @@ import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.adapter.LocalFileListAdapter;
 import com.owncloud.android.utils.AnalyticsUtils;
 import com.owncloud.android.utils.FileStorageUtils;
+import com.owncloud.android.utils.ThemeUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -87,7 +91,6 @@ public class LocalFileListFragment extends ExtendedListFragment {
         }
     }
     
-    
     /**
      * {@inheritDoc}
      */
@@ -95,11 +98,19 @@ public class LocalFileListFragment extends ExtendedListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log_OC.i(TAG, "onCreateView() start");
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        if(!mContainerActivity.isFolderPickerMode()) {
+            setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+            setMessageForEmptyList(R.string.file_list_empty_headline, R.string.local_file_list_empty,
+                    R.drawable.ic_list_empty_folder, true);
+        } else {
+            setMessageForEmptyList(R.string.folder_list_empty_headline, R.string.local_folder_list_empty,
+                    R.drawable.ic_list_empty_folder, true);
+        }
+
         setSwipeEnabled(false); // Disable pull-to-refresh
         setFabEnabled(false); // Disable FAB
-        setMessageForEmptyList(R.string.file_list_empty_headline, R.string.local_file_list_empty,
-                R.drawable.ic_list_empty_folder, true);
+
         Log_OC.i(TAG, "onCreateView() end");
         return v;
     }
@@ -113,10 +124,28 @@ public class LocalFileListFragment extends ExtendedListFragment {
         Log_OC.i(TAG, "onActivityCreated() start");
         
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new LocalFileListAdapter(mContainerActivity.getInitialDirectory(), getActivity());
+
+        mAdapter = new LocalFileListAdapter(
+                mContainerActivity.isFolderPickerMode(),
+                mContainerActivity.getInitialDirectory(),
+                getActivity()
+        );
         setListAdapter(mAdapter);
         
         Log_OC.i(TAG, "onActivityCreated() stop");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (mContainerActivity.isFolderPickerMode()) {
+            menu.removeItem(R.id.action_select_all);
+            menu.removeItem(R.id.action_search);
+        } else {
+            super.onCreateOptionsMenu(menu, inflater);
+        }
     }
     
     /**
@@ -141,8 +170,12 @@ public class LocalFileListFragment extends ExtendedListFragment {
                 ImageView checkBoxV = (ImageView) v.findViewById(R.id.custom_checkbox);
                 if (checkBoxV != null) {
                     if (getListView().isItemChecked(position)) {
-                        checkBoxV.setImageResource(R.drawable.ic_checkbox_marked);
+                        v.setBackgroundColor(getContext().getResources().getColor(R.color.selected_item_background));
+                        checkBoxV.setImageDrawable(ThemeUtils.tintDrawable(R.drawable.ic_checkbox_marked,
+                                ThemeUtils.primaryColor()));
+
                     } else {
+                        v.setBackgroundColor(Color.WHITE);
                         checkBoxV.setImageResource(R.drawable.ic_checkbox_blank_outline);
                     }
                 }
@@ -236,11 +269,11 @@ public class LocalFileListFragment extends ExtendedListFragment {
      * @return      File paths to the files checked by the user.
      */
     public String[] getCheckedFilePaths() {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
         SparseBooleanArray positions = mCurrentListView.getCheckedItemPositions();
         if (positions.size() > 0) {
             for (int i = 0; i < positions.size(); i++) {
-                if (positions.get(positions.keyAt(i)) == true) {
+                if (positions.get(positions.keyAt(i))) {
                     result.add(((File) mCurrentListView.getItemAtPosition(
                             positions.keyAt(i))).getAbsolutePath());
                 }
@@ -297,8 +330,7 @@ public class LocalFileListFragment extends ExtendedListFragment {
          * @param file
          */
         void onFileClick(File file);
-        
-        
+
         /**
          * Callback method invoked when the parent activity
          * is fully created to get the directory to list firstly.
@@ -307,6 +339,13 @@ public class LocalFileListFragment extends ExtendedListFragment {
          */
         File getInitialDirectory();
 
+        /**
+         * config check if the list should behave in
+         * folder picker mode only displaying folders but no files.
+         *
+         * @return true if folder picker mode, else false
+         */
+        boolean isFolderPickerMode();
     }
 
 

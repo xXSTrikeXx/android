@@ -12,7 +12,6 @@
     <string name="actionbar_see_details">详细信息</string>
     <string name="actionbar_send_file">发送</string>
     <string name="actionbar_sort">排序</string>
-    <string name="actionbar_sort_title">排序方式</string>
     <string name="sort_by">排序方式</string>
     <string name="menu_item_sort_by_name_a_z">按名称顺序</string>
     <string name="menu_item_sort_by_name_z_a">按名称倒序</string>
@@ -22,7 +21,6 @@
     <string name="menu_item_sort_by_size_smallest_first">文件从小到大排序</string>
 
     <string name="drawer_item_all_files">全部文件</string>
-    <string name="drawer_item_files">文件</string>
     <string name="drawer_item_home">首页</string>
     <string name="drawer_item_favorites">收藏</string>
     <string name="drawer_item_photos">照片</string>
@@ -40,39 +38,31 @@
     <string name="drawer_open">打开</string>
     <string name="prefs_category_general">常规</string>
     <string name="prefs_category_more">更多</string>
-    <string name="prefs_accounts">账号</string>
     <string name="prefs_manage_accounts">管理账号</string>
     <string name="prefs_passcode">密码锁</string>
     <string name="prefs_fingerprint">指纹锁</string>
     <string name="prefs_fingerprint_notsetup">指纹锁没有设置</string>
+    <string name="prefs_expert_mode">专家模式</string>
     <string name="prefs_show_hidden_files">显示隐藏文件</string>
-    <string name="prefs_instant_upload">立刻上传图片</string>
-    <string name="prefs_instant_upload_summary">立刻上传摄像头拍摄的图片</string>
-    <string name="prefs_instant_video_upload">立刻上传视频</string>
-    <string name="prefs_instant_video_upload_summary">立刻上传摄像头拍摄的视频</string>
-    <string name="prefs_log_title">开启日志</string>
-    <string name="prefs_log_summary">用于记录问题</string>
-    <string name="prefs_log_title_history">历史日志</string>
-    <string name="prefs_log_summary_history">这显示已经保存的日志</string>
     <string name="prefs_log_delete_history_button">删除历史</string>
     <string name="prefs_calendar_contacts">同步日历和通讯录</string>
     <string name="prefs_calendar_contacts_summary">为现在的用户设置DAVdroid(v1.3.0+)</string>
     <string name="prefs_calendar_contacts_address_resolve_error">用户目前的服务器地址对于DAVdroid不能被解析</string>
     <string name="prefs_calendar_contacts_no_store_error">F-droid或谷歌商店都没有装</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">日历&amp;联系人同步设置</string>
+    <string name="prefs_daily_contacts_sync_summary">联系人每日备份</string>
     <string name="prefs_help">帮助</string>
     <string name="prefs_recommend">推荐给朋友</string>
     <string name="prefs_feedback">反馈</string>
     <string name="prefs_imprint">版本说明</string>
-    <string name="prefs_remember_last_share_location">记住本地共享</string>
-    <string name="prefs_remember_last_upload_location_summary">记住最近的本地共享</string>
 
 	<string name="recommend_subject">在您的智能手机上试用 %1$s！</string>
 	<string name="recommend_text">我想邀请你在智能机上使用%1$s。
 从这里下载：%2$s</string>
+    <string name="recommend_urls">%1$s 或 %2$s</string>
 
     <string name="auth_check_server">检查服务器</string>
-    <string name="auth_host_url">服务器地址 https://...</string>
+    <string name="auth_host_url">服务器地址 https://&#8230;</string>
     <string name="auth_username">用户名</string>
     <string name="auth_password">密码</string>
     <string name="auth_register">你是不是还没有服务器？
@@ -86,7 +76,6 @@
     <string name="uploader_wrn_no_account_setup_btn_text">设置</string>
     <string name="uploader_wrn_no_account_quit_btn_text">退出</string>
     <string name="uploader_error_title_no_file_to_upload">文件没有上传</string>
-    <string name="uploader_error_message_received_piece_of_text">%1$s不能把一段文字做为文件上传</string>
     <string name="uploader_error_message_no_file_to_upload">得到的数据没有包括有效文件</string>
     <string name="uploader_error_title_file_cannot_be_uploaded">不能上传这个文件</string>
     <string name="uploader_error_message_read_permission_not_granted">%1$s 不让读取已经获得的文件</string>
@@ -99,13 +88,14 @@
     <string name="file_list_seconds_ago">几秒前</string>
     <string name="file_list_empty_headline">这里没有文件
 </string>
+    <string name="folder_list_empty_headline">无文件</string>
     <string name="file_list_empty">上传一些内容或与您的设备同步。</string>
-    <string name="file_list_empty_favorites">把一些文件设为“我喜欢的”或者从设备同步</string>
     <string name="file_list_empty_favorites_filter_list">你标记为“我喜欢的”文件和文件夹会显示在这里</string>
     <string name="file_list_empty_favorites_filter">没有找到您搜索的“我喜欢的”。</string>
     <string name="file_list_loading">加载中&#8230;</string>
     <string name="file_list_no_app_for_file_type">没有设置应用程序来处理这种类型的文件</string>
     <string name="local_file_list_empty">在该文件夹中不存在文件。</string>
+    <string name="local_folder_list_empty">无其他文件夹</string>
     <string name="file_list_empty_headline_search">此文件夹无结果</string>
     <string name="file_list_empty_headline_server_search">没有结果</string>
     <string name="file_list_empty_favorite_headline">还没有“我喜欢的”</string>
@@ -115,8 +105,7 @@
     <string name="file_list_empty_headline_server_search_photos">无照片</string>
     <string name="file_list_empty_search">说不定它在另外一个文件夹？</string>
     <string name="file_list_empty_recently_modified">没有找到最近7天修改的文件</string>
-    <string name="file_list_empty_recently_modified_filter">没有搜索到被修改的文件
- 在最近7天。</string>
+    <string name="file_list_empty_recently_modified_filter">经搜索无7天内修改的文件</string>
     <string name="file_list_empty_recently_added">没有找到最近添加的文件</string>
     <string name="file_list_empty_recently_added_filter">您的搜索返回没有最近没有添加的文件。</string>
     <string name="file_list_empty_text_photos">上传一些照片或启用自动上传。</string>
@@ -127,9 +116,6 @@
     <string name="upload_list_empty_text">上传一些内容或启用即时上传。</string>
     <string name="upload_list_empty_text_auto_upload">上传一些内容或启用自动上传。</string>
     <string name="file_list_folder">文件夹</string>
-    <string name="file_list_folders">文件夹</string>
-    <string name="file_list_file">文件</string>
-    <string name="file_list_files">文件</string>
     <string name="filedetails_select_file">点击一个文件可以显示额外的信息。</string>
     <string name="filedetails_size">大小：</string>
     <string name="filedetails_type">类型：</string>
@@ -149,17 +135,17 @@
     <string name="common_cancel">取消</string>
     <string name="common_back">返回</string>
     <string name="common_save">保存</string>
-    <string name="common_save_exit">保存并退出</string>
     <string name="common_error">错误</string>
     <string name="common_loading">加载中 &#8230;</string>
     <string name="common_unknown">未知</string>
     <string name="common_error_unknown">未知错误</string>
     <string name="common_pending">等待</string>
+    <string name="common_delete">删除</string>
     <string name="about_title">关于</string>
     <string name="change_password">修改密码</string>
     <string name="delete_account">删除账号</string>
-    <string name="delete_account_warning">删除用户%s?\n\n删除不能撤销</string>
-    <string name="create_account">创建账号</string>
+    <string name="delete_account_warning">是否删除该账户 %s 并且删除所有文件?\n\n一经删除无法撤销该操作</string>
+    <string name="active_user">活跃用户</string>
     <string name="upload_chooser_title">上传自 &#8230;</string>
     <string name="uploader_info_dirname">文件夹名称</string>
     <string name="uploader_upload_in_progress_ticker">上传 &#8230;</string>
@@ -171,7 +157,7 @@
     <string name="uploader_upload_failed_credentials_error">上传失败，你需要重新登录</string>
     <string name="uploads_view_title">上传</string>
     <string name="uploads_view_group_current_uploads">当前</string>
-    <string name="uploads_view_group_failed_uploads">失败。(轻按以重试)</string>
+    <string name="uploads_view_group_failed_uploads">加载失败，等待重启</string>
     <string name="uploads_view_group_finished_uploads">已上传</string>
     <string name="uploads_view_upload_status_succeeded">完成</string>
     <string name="uploads_view_upload_status_cancelled">已取消</string>
@@ -187,7 +173,7 @@
     <string name="uploads_view_upload_status_service_interrupted">应用程式已终止</string>
     <string name="uploads_view_upload_status_unknown_fail">未知错误</string>
     <string name="uploads_view_upload_status_waiting_for_wifi">等待Wi-Fi连接</string>
-    <string name="uploads_view_later_waiting_to_upload">等待上传...</string>
+    <string name="uploads_view_later_waiting_to_upload">等待上传</string>
     <string name="downloader_download_in_progress_ticker">下载中 &#8230;</string>
     <string name="downloader_download_in_progress_content">%1$d%% 下载中 %2$s</string>
     <string name="downloader_download_succeeded_ticker">下载</string>
@@ -272,7 +258,7 @@
 	<string name="auth_expired_oauth_token_toast">你的授权已经过期。请重新授权。</string>
 	<string name="auth_expired_basic_auth_toast">请输入当前的密码</string>
 	<string name="auth_expired_saml_sso_token_toast">您的会话超时了，请重新连接</string>
-	<string name="auth_connecting_auth_server">连接到身份验证服务器...</string>
+	<string name="auth_connecting_auth_server">连接到身份验证服务器&#8230;</string>
 	<string name="auth_unsupported_auth_method">服务器不支持这种验证方式</string>
 	<string name="auth_unsupported_multiaccount">%1$s不支持多个账户</string>
 	<string name="auth_fail_get_user_name">您的服务器没有返回正确的用户ID，请与管理员联系</string>
@@ -300,15 +286,15 @@
     <string name="filename_forbidden_characters">禁用字符: / \\ &lt; &gt; : \" | ? *</string>
     <string name="filename_forbidden_charaters_from_server">文件名中存在至少一个非法字符</string>
     <string name="filename_empty">文件名不能为空</string>
-    <string name="wait_a_moment">稍等</string>
+    <string name="wait_a_moment">稍等&#8230;</string>
     <string name="wait_checking_credentials">检查保存的证书</string>
     <string name="filedisplay_unexpected_bad_get_content">意外的问题，请从不同的应用程序选择文件</string>
     <string name="filedisplay_no_file_selected">没有选择文件</string>
     <string name="activity_chooser_title">发送链接给 &#8230;</string>
     <string name="wait_for_tmp_copy_from_private_storage">从私有存储中拷贝文件</string>
     
-    <string name="oauth_check_onoff">使用oAuth2登录</string> 
-    <string name="oauth_login_connection">连接到OAuth 2服务器...</string>    
+    <string name="oauth_check_onoff">使用OAuth 2.0登录</string> 
+    <string name="oauth_login_connection">连接到OAuth 2.0服务器&#8230;</string>
         
     <string name="ssl_validator_header">站点身份无法验证</string>
     <string name="ssl_validator_reason_cert_not_trusted">- 不受信任的服务器证书</string>
@@ -346,7 +332,6 @@
     <string name="placeholder_media_time">12:23:45</string>
 
     <string name="auto_upload_on_wifi">仅在Wi-Fi下上传</string>
-    <string name="instant_upload_on_wifi">仅在Wi-Fi下上传图片</string>
     <string name="instant_video_upload_on_wifi">仅在Wi-Fi下上传视频</string>
     <string name="instant_video_upload_on_charging">仅在充电时上传</string>
     <string name="instant_upload_on_charging">仅在充电时上传</string>
@@ -364,8 +349,8 @@
 
     <string name="error__upload__local_file_not_copied">无法复制 %1$s 到本地目录 %2$s</string>
     <string name="prefs_instant_upload_path_title">实时上传文件夹</string>
-    <string name="prefs_folder_sync_local_path_title">本地文件夹</string>
-    <string name="prefs_folder_sync_remote_path_title">远端文件夹</string>
+    <string name="prefs_synced_folders_local_path_title">本地文件夹</string>
+    <string name="prefs_synced_folders_remote_path_title">远端文件夹</string>
     <string name="prefs_instant_upload_path_use_subfolders_title">使用子文件夹</string>
     <string name="prefs_instant_upload_path_use_subfolders_summary">基于年和月存于子文件夹</string>
 
@@ -416,10 +401,10 @@
     <string name="file_migration_restoring_accounts_configuration">恢复帐户配置1&#8230;</string>
     <string name="file_migration_ok_finished">完成</string>
     <string name="file_migration_failed_not_enough_space">错误：空间不足</string>
-    <string name="file_migration_failed_not_writable">错误：目标文件不可写</string>
-    <string name="file_migration_failed_not_readable">错误：源文件不可读</string>
-    <string name="file_migration_failed_dir_already_exists">错误：Nextcloud目录已经存在</string>
-    <string name="file_migration_failed_while_coping">错误：迁移过程中失败</string>
+    <string name="file_migration_failed_not_writable">错误：目标文件不可写入</string>
+    <string name="file_migration_failed_not_readable">错误：无法读取源文件</string>
+    <string name="file_migration_failed_dir_already_exists">错误：Nextcloud目录已存在</string>
+    <string name="file_migration_failed_while_coping">错误：迁移失败</string>
     <string name="file_migration_failed_while_updating_index">错误：无法更新索引</string>
 
     <string name="file_migration_directory_already_exists">数据文件夹已经存在。请选择以下选项：</string>
@@ -427,7 +412,8 @@
     <string name="file_migration_use_data_folder">使用</string>
 
     <string name="file_migration_source_not_readable_title">源目录不可读！</string>
-    <string name="prefs_category_accounts">账号</string>
+    <string name="file_migration_source_not_readable">您确认更改存储目录到%1$s吗？注意：此操作后一切数据均需重新下载</string>
+
     <string name="prefs_add_account">添加账号</string>
     <string name="drawer_manage_accounts">管理账号</string>
     <string name="auth_redirect_non_secure_connection_title">安全连接通过不安全的路由重定向。</string>
@@ -484,7 +470,7 @@
     <string name="file_list__footer__files">%1$d 个文件</string>
     <string name="file_list__footer__files_and_folder">%1$d 个文件，1 个文件夹</string>
     <string name="file_list__footer__files_and_folders">%1$d 个文件，%2$d 个文件夹</string>
-    <string name="set_picture_as">设置图片</string>
+    <string name="set_picture_as">将图片用作</string>
     <string name="set_as">设置</string>
 
     <string name="prefs_instant_behaviour_dialogTitle">原始文件将会&#8230;</string>
@@ -492,6 +478,7 @@
     <string name="upload_copy_files">复制文件</string>
     <string name="upload_move_files">移动文件</string>
     <string name="select_all">选择全部</string>
+    <string name="deselect_all">全部取消选择</string>
 
     <string name="pref_behaviour_entries_keep_file">保留在原始文件夹</string>
     <string name="pref_behaviour_entries_move">移动到应用文件夹</string>
@@ -523,6 +510,9 @@
     <string name="share_known_remote_clarification">%1$s ( 在 %2$s )</string>
 
     <string name="share_sharee_unavailable">升级服务器版本以允许在其客户端之间的用户之间共享。\ n请与您的管理员联系</string>
+    <string name="filedetails_share_link_enable">共享链接已启用</string>
+    <string name="filedetails_share_link_disable">链接不共享</string>
+    <string name="filedetails_share_users_with_access">有权访问的用户和组</string>
     <string name="share_privilege_can_share">可共享</string>
     <string name="share_privilege_can_edit">可编辑</string>
     <string name="share_privilege_can_edit_create">创建</string>
@@ -531,10 +521,11 @@
     <string name="edit_share_unshare">停止共享</string>
     <string name="edit_share_done">完成</string>
 
-    <string name="action_retry_uploads">新尝试失败</string>
-    <string name="action_clear_failed_uploads">清除失败</string>
-    <string name="action_clear_successful_uploads">清除</string>
+    <string name="action_retry_uploads">重试失败上传任务</string>
+    <string name="action_clear_failed_uploads">清除失败上传任务</string>
+    <string name="action_clear_successful_uploads">清除成功上传任务</string>
     <string name="action_clear_finished_uploads">清除完成上传</string>
+    <string name="action_force_rescan">强制重新扫描</string>
 
     <string name="action_switch_grid_view">网格视图</string>
     <string name="action_switch_list_view">列表视图</string>
@@ -549,35 +540,37 @@
     <string name="confirmation_remove_files_alert">你是否真的要删除所选的项目？</string>
     <string name="confirmation_remove_folders_alert">你是否真的要删除所选的项目和它们的内容？</string>
     <string name="maintenance_mode">服务器处于维护模式</string>
+    <string name="lock_failed">锁定文件失败</string>
 
     <string name="uploads_view_upload_status_waiting_for_charging">等待收费</string>
     <string name="actionbar_search">搜索</string>
     <string name="files_drop_not_supported">这是一个Nextcloud的特征，请更新</string>
     <string name="learn_more">学习更多</string>
-    <string name="drawer_folder_sync">自动上传</string>
+    <string name="drawer_synced_folders">自动上传</string>
     <string name="drawer_participate">参加</string>
     <string name="participate_testing_headline">通过测试帮助</string>
     <string name="participate_testing_bug_text">发现错误？细节？</string>
-    <string name="participate_testing_report_text">在GIthub在报告问题</string>
+    <string name="participate_testing_report_text">在Github报告问题 OR 通过Github提交问题（issue）</string>
     <string name="participate_testing_version_text">在帮助里有兴趣通过测试下一个版本？</string>
     <string name="participate_beta_headline">检查这个设备的版本</string>
     <string name="participate_beta_text">这包括所有即将到来的功能，它处于非常流行的边缘。 可能会发生错误/错误，如果及时，请报告您的发现。</string>
     <string name="participate_release_candidate_headline">发行候选版本</string>
-    <string name="participate_release_candidate_text">发布候选人（RC）是即将发布的快照，预计将稳定。 测试您的个人设置可以帮助确保这一点。 注册在Play商店进行测试，或手动查看F-Droid上的“版本”部分。</string>
+    <string name="participate_release_candidate_text">候选发行版（RC）是指即将正式发布的版本，理论上说是稳定的。该测试有您的参加将确保正式版本的稳定。您可在Google Play应用商店参与测试或在F-Droid（F-Droid是一个Android应用程序的软件资源库或应用商店，类似于Google Play商店，但只包含自由及开放源代码软件）手动查看应用资源库的“版本”部分</string>
     <string name="participate_contribute_headline">活跃的候选版</string>
-    <string name="participate_contribute_irc_text">在IRC上加入这个会话： &lt;a href=\"%1$s\">#nextcloud-mobile&lt;/a></string>
-    <string name="participate_contribute_forum_text">帮助他人在 &lt;a href=\"%1$s\">论坛&lt;/a></string>
-    <string name="participate_contribute_translate_text">&lt;a href=\"%1$s\">翻译e&lt;/a> 应用程序</string>
-    <string name="participate_contribute_github_text">查看，修改和编写代码，有关详细信息，请参阅&lt;a   href=\"%1$s\">CONTRIBUTING.md&lt;/a> </string>
+    <string name="participate_contribute_irc_text">在 IRC 上加入此聊天</string>
+    <string name="participate_contribute_forum_text">帮助他人在</string>
+    <string name="participate_contribute_forum_forum">论坛</string>
+    <string name="participate_contribute_translate_translate">翻译</string>
+    <string name="participate_contribute_translate_text">此应用</string>
+    <string name="participate_contribute_github_text">查看，修改和编写代码，有关详细信息，请参阅%1$s</string>
     <string name="move_to">转移到&#8230;</string>
     <string name="copy_to">复制到</string>
-    <string name="choose_remote_folder">选择文件夹&#8230;</string>
-    <string name="folder_sync_loading_folders">加载文件夹&#8230;</string>
-    <string name="folder_sync_no_results">没有发现媒体文件夹</string>
-    <string name="folder_sync_preferences">自动上传的首选项</string>
-    <string name="folder_sync_settings">设置</string>
-    <string name="folder_sync_new_info">即时上传已完全重新整理。 从主菜单重新配置您的自动上传。\ n \ n请使用新的的和扩展的自动上传。</string>
-    <string name="folder_sync_preferences_folder_path">为%1$s</string>
+    <string name="choose_remote_folder">选择远端文件夹&#8230;</string>
+    <string name="choose_local_folder">选择本地文件夹&#8230;</string>
+    <string name="synced_folders_loading_folders">正在载入文件夹&#8230;</string>
+    <string name="synced_folders_no_results">没有发现媒体文件夹</string>
+    <string name="synced_folders_preferences">自动上传的首选项</string>
+    <string name="synced_folders_settings">设置</string>
     <plurals name="items_selected_count">
         <item quantity="other">%d被选择</item>
     </plurals>
@@ -601,7 +594,7 @@
     <string name="storage_description_unknown">不知道</string>
 
     <!-- What's new feature and texts to show -->
-    <string name="whats_new_title">有什么新东西在Nextcloud里</string>
+    <string name="whats_new_title">有什么新东西在%1$s里</string>
 
     <!-- Welcome to Nc intro features -->
     <string name="welcome_feature_1_title">给你所有的数据一个安全的家</string>
@@ -610,9 +603,11 @@
     <string name="welcome_feature_2_title">多用户</string>
     <string name="welcome_feature_2_text">联接你所有的云</string>
 
-    <string name="welcome_feature_3_title">即时上传</string>
+    <string name="welcome_feature_3_title">自动上传</string>
     <string name="welcome_feature_3_text">保护你的照片安全</string>
 
+    <string name="whats_new_search_title">全服务器搜索</string>
+    <string name="whats_new_theming_title">主题支持</string>
     <string name="whats_new_skip">跳过</string>
 
     <string name="fingerprint_scan_finger">请扫描你的手指</string>
@@ -634,13 +629,10 @@
     <string name="webview_error">发生错误</string>
     <string name="prefs_category_about">关于</string>
 
-    <string name="actionbar_contacts">备份联系人</string>
+    <string name="actionbar_contacts">联系人备份</string>
     <string name="actionbar_contacts_restore">恢复联系人</string>
-    <string name="contacts_backup_button">立即备份</string>
-    <string name="contacts_restore_button">恢复上次备份</string>
-    <string name="contacts_header_restore">恢复</string>
-    <string name="contacts_header_backup">备份</string>
-    <string name="contacts_automatic_backup">联系人备份</string>
+    <string name="contacts_backup_button">现在备份</string>
+    <string name="contacts_automatic_backup">自动备份</string>
     <string name="contacts_last_backup">上次备份</string>
     <string name="contacts_read_permission">需要更改阅读列表的权限</string>
     <string name="contacts_write_permission">需要更改联系人列表的权限</string>
@@ -662,6 +654,13 @@
     <string name="privacy">隐私</string>
     <string name="file_not_found">文件未找到</string>
 
-    <string name="folder_sync_folders">配置文件夹</string>
+    <!-- Auto upload -->
+    <string name="autoupload_custom_folder">设置一个自定义文件夹</string>
+    <string name="autoupload_create_new_custom_folder">创建新的自定义文件夹设定</string>
+    <string name="synced_folders_configure_folders">配置文件夹</string>
 
-  </resources>
+    <string name="test_server_button">测试服务连接</string>
+    <string name="resharing_is_not_allowed">不允许二次共享</string>
+    <string name="whats_new_fingerprint_title">指纹解锁</string>
+    <string name="whats_new_fingerprint_content">请用指纹解锁</string>
+</resources>

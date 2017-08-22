@@ -28,10 +28,20 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 
 import com.owncloud.android.MainApp;
+import com.owncloud.android.datamodel.ArbitraryDataProvider;
+import com.owncloud.android.datamodel.FileDataStorageManager;
+import com.owncloud.android.lib.common.OwnCloudAccount;
+import com.owncloud.android.lib.common.OwnCloudClient;
+import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
+import com.owncloud.android.lib.common.UserInfo;
 import com.owncloud.android.lib.common.accounts.AccountTypeUtils;
 import com.owncloud.android.lib.common.accounts.AccountUtils.Constants;
+import com.owncloud.android.lib.common.operations.RemoteOperationResult;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.status.OwnCloudVersion;
+import com.owncloud.android.lib.resources.users.GetRemoteUserInfoOperation;
+import com.owncloud.android.operations.GetCapabilitiesOperarion;
+import com.owncloud.android.ui.activity.ManageAccountsActivity;
 
 import java.util.Locale;
 
@@ -46,6 +56,7 @@ public class AccountUtils {
     public static final String STATUS_PATH = "/status.php";
 
     public static final int ACCOUNT_VERSION = 1;
+    public static final int ACCOUNT_VERSION_WITH_PROPER_ID = 2;
 
     /**
      * Can be used to get the currently selected ownCloud {@link Account} in the
@@ -60,10 +71,10 @@ public class AccountUtils {
         Account[] ocAccounts = getAccounts(context);
         Account defaultAccount = null;
 
-        SharedPreferences appPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        String accountName = appPreferences
-                .getString("select_oc_account", null);
+        ArbitraryDataProvider arbitraryDataProvider = new ArbitraryDataProvider(context.getContentResolver());
+
+        SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String accountName = appPreferences.getString("select_oc_account", null);
 
         // account validation: the saved account MUST be in the list of ownCloud Accounts known by the AccountManager
         if (accountName != null) {
@@ -74,10 +85,18 @@ public class AccountUtils {
                 }
             }
         }
-        
-        if (defaultAccount == null && ocAccounts.length != 0) {
-            // take first account as fallback
-            defaultAccount = ocAccounts[0];
+
+        if (defaultAccount == null && ocAccounts.length > 0) {
+            // take first which is not pending for removal account as fallback
+            for (Account account: ocAccounts) {
+                boolean pendingForRemoval = arbitraryDataProvider.getBooleanValue(account,
+                        ManageAccountsActivity.PENDING_FOR_REMOVAL);
+
+                if (!pendingForRemoval) {
+                    defaultAccount = account;
+                    break;
+                }
+            }
         }
 
         return defaultAccount;
@@ -143,19 +162,32 @@ public class AccountUtils {
         }
         return null;
     }
-    
 
-    public static boolean setCurrentOwnCloudAccount(Context context, String accountName) {
+
+    public static boolean setCurrentOwnCloudAccount(final Context context, String accountName) {
         boolean result = false;
         if (accountName != null) {
             boolean found;
-            for (Account account : getAccounts(context)) {
+            for (final Account account : getAccounts(context)) {
                 found = (account.name.equals(accountName));
                 if (found) {
-                    SharedPreferences.Editor appPrefs = PreferenceManager
-                            .getDefaultSharedPreferences(context).edit();
+                    SharedPreferences.Editor appPrefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
                     appPrefs.putString("select_oc_account", accountName);
-    
+
+                    // update credentials
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            FileDataStorageManager storageManager = new FileDataStorageManager(account,
+                                    context.getContentResolver());
+                            GetCapabilitiesOperarion getCapabilities = new GetCapabilitiesOperarion();
+                            RemoteOperationResult updateResult = getCapabilities.execute(storageManager, context);
+                            Log_OC.w(TAG, "Update Capabilities: " + updateResult.isSuccess());
+                        }
+                    });
+
+                    t.start();
+
                     appPrefs.apply();
                     result = true;
                     break;
@@ -163,6 +195,13 @@ public class AccountUtils {
             }
         }
         return result;
+    }
+
+    public static void resetOwnCloudAccount(Context context) {
+        SharedPreferences.Editor appPrefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        appPrefs.putString("select_oc_account", null);
+
+        appPrefs.apply();
     }
 
     /**
@@ -205,8 +244,8 @@ public class AccountUtils {
         if ( currentAccount != null ) {
             String currentAccountVersion = accountMgr.getUserData(currentAccount, Constants.KEY_OC_ACCOUNT_VERSION);
 
-            if (currentAccountVersion == null) {
-                Log_OC.i(TAG, "Upgrading accounts to account version #" + ACCOUNT_VERSION);
+            if (!String.valueOf(ACCOUNT_VERSION_WITH_PROPER_ID).equalsIgnoreCase(currentAccountVersion)) {
+                Log_OC.i(TAG, "Upgrading accounts to account version #" + ACCOUNT_VERSION_WITH_PROPER_ID);
                 Account[] ocAccounts = accountMgr.getAccountsByType(MainApp.getAccountType());
                 String serverUrl;
                 String username;
@@ -216,8 +255,29 @@ public class AccountUtils {
                 for (Account account : ocAccounts) {
                     // build new account name
                     serverUrl = accountMgr.getUserData(account, Constants.KEY_OC_BASE_URL);
-                    username = com.owncloud.android.lib.common.accounts.AccountUtils.
-                            getUsernameForAccount(account);
+
+                    // update user name
+                    try {
+                        OwnCloudAccount ocAccount = new OwnCloudAccount(account, context);
+                        OwnCloudClient client = OwnCloudClientManagerFactory.getDefaultSingleton()
+                                .getClientFor(ocAccount, context);
+
+                        GetRemoteUserInfoOperation remoteUserNameOperation = new GetRemoteUserInfoOperation();
+                        RemoteOperationResult result = remoteUserNameOperation.execute(client);
+
+                        if (result.isSuccess()) {
+                            UserInfo userInfo = (UserInfo) result.getData().get(0);
+                            username = userInfo.id;
+                        } else {
+                            // skip account, try it next time
+                            Log_OC.e(TAG, "Error while getting username for account: " + account.name);
+                            continue;
+                        }
+                    } catch (Exception e) {
+                        Log_OC.e(TAG, "Error while getting username: " + e.getMessage());
+                        continue;
+                    }
+
                     newAccountName = com.owncloud.android.lib.common.accounts.AccountUtils.
                             buildAccountName(Uri.parse(serverUrl), username);
 
@@ -279,11 +339,9 @@ public class AccountUtils {
                     }
 
                     // at least, upgrade account version
-                    Log_OC.d(TAG, "Setting version " + ACCOUNT_VERSION + " to " + newAccountName);
-                    accountMgr.setUserData(
-                            newAccount, Constants.KEY_OC_ACCOUNT_VERSION, Integer.toString(ACCOUNT_VERSION)
-                    );
-
+                    Log_OC.d(TAG, "Setting version " + ACCOUNT_VERSION_WITH_PROPER_ID + " to " + newAccountName);
+                    accountMgr.setUserData(newAccount,
+                            Constants.KEY_OC_ACCOUNT_VERSION, Integer.toString(ACCOUNT_VERSION_WITH_PROPER_ID));
                 }
             }
         }

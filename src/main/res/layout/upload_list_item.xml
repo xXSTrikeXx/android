@@ -19,7 +19,7 @@
             android:layout_width="@dimen/file_icon_size"
             android:layout_height="@dimen/file_icon_size"
             android:layout_gravity="center"
-            android:src="@drawable/ic_menu_archive" />
+            android:src="@drawable/folder" />
   
     </FrameLayout>
 
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/list_item_lastmod_and_filesize_text"
-            android:singleLine="true"
+            android:maxLines="1"
             android:text="@string/auth_username"
             android:textSize="@dimen/upload_list_item_text_size_independent"/>
 

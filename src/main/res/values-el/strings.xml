@@ -12,7 +12,6 @@
     <string name="actionbar_see_details">Λεπτομέρειες</string>
     <string name="actionbar_send_file">Αποστολή</string>
     <string name="actionbar_sort">Ταξινόμηση</string>
-    <string name="actionbar_sort_title">Ταξινόμηση κατά</string>
     <string name="sort_by">Ταξινόμηση κατά</string>
     <string name="menu_item_sort_by_name_a_z">Α - Ω</string>
     <string name="menu_item_sort_by_name_z_a">Ω - Α</string>
@@ -22,7 +21,6 @@
     <string name="menu_item_sort_by_size_smallest_first">Μικρότερο πρώτα</string>
 
     <string name="drawer_item_all_files">Όλα τα αρχεία</string>
-    <string name="drawer_item_files">Αρχεία</string>
     <string name="drawer_item_home">Αρχική</string>
     <string name="drawer_item_favorites">Αγαπημένα</string>
     <string name="drawer_item_photos">Φωτογραφίες</string>
@@ -40,38 +38,29 @@
     <string name="drawer_open">Άνοιγμα</string>
     <string name="prefs_category_general">Γενικά</string>
     <string name="prefs_category_more">Περισσότερα</string>
-    <string name="prefs_accounts">Λογαριασμοί</string>
     <string name="prefs_manage_accounts">Διαχείριση λογαριασμών</string>
     <string name="prefs_passcode">Κλείδωμα με κωδικό πρόσβασης</string>
     <string name="prefs_fingerprint">Κλείδωμα με αποτύπωμα</string>
     <string name="prefs_fingerprint_notsetup">Δεν έχει οριστεί αποτύπωμα</string>
     <string name="prefs_show_hidden_files">Εμφάνιση κρυφών αρχείων</string>
-    <string name="prefs_instant_upload">Άμεσες μεταφορτώσεις φωτογραφιών</string>
-    <string name="prefs_instant_upload_summary">Άμεση μεταφόρτωση φωτογραφιών που λήφθησαν από την φωτογραφική μηχανή</string>
-    <string name="prefs_instant_video_upload">Άμεση μεταφόρτωση βίντεο</string>
-    <string name="prefs_instant_video_upload_summary">Άμεση μεταφόρτωση βίντεο που λήφθησαν από την φωτογραφική μηχανή</string>
-    <string name="prefs_log_title">Ενεργοποίηση καταγραφής ιστορικού</string>
-    <string name="prefs_log_summary">Χρησιμοποιείται για την καταγραφή προβλημάτων</string>
-    <string name="prefs_log_title_history">Καταγραφή ιστορικού</string>
-    <string name="prefs_log_summary_history">Εμφάνιση του καταγεγραμμένου ιστορικού</string>
     <string name="prefs_log_delete_history_button">Διαγραφή ιστορικού</string>
     <string name="prefs_calendar_contacts">Συγχρονισμός ημερολογίου &amp; επαφών</string>
     <string name="prefs_calendar_contacts_summary">Ρυθμίστε το DAVdroid (v1.3.0+) για τον τρέχον λογαριασμό</string>
     <string name="prefs_calendar_contacts_address_resolve_error">Η διεύθυνση του διακομιστή για τον λογαριασμό δεν μπορεί να καθοριστεί για το DAVdroid</string>
     <string name="prefs_calendar_contacts_no_store_error">Δεν είναι εγκατεστημένο το F-droid αλλά ούτε και το Google Play</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Επιτυχής ρύθμιση συγχρονισμού ημερολογίου &amp; επαφών</string>
+    <string name="prefs_daily_contacts_sync_summary">Ημερήσιο αντίγραφο ασφαλείας των επαφών σας </string>
     <string name="prefs_help">Βοήθεια</string>
     <string name="prefs_recommend">Προτείνετε σε φίλο</string>
     <string name="prefs_feedback">Aνάδραση</string>
     <string name="prefs_imprint">Αποτύπωμα</string>
-    <string name="prefs_remember_last_share_location">Απομνημόνευση θέσης διαμοιρασμού</string>
-    <string name="prefs_remember_last_upload_location_summary">Απομνημόνευση τελευταιας τοποθεσίας διαμοιρασμού μεταφορτώσεων</string>
 
 	<string name="recommend_subject">Δοκιμή %1$s στο κινητό σας!</string>
 	<string name="recommend_text">Θα ήθελα να σε προσκαλέσω να χρησιμοποιήσεις το %1$s στο κινητό σου!\nΛήψη από εδώ: %2$s</string>
+    <string name="recommend_urls">%1$s ή %2$s</string>
 
     <string name="auth_check_server">Έλεγχος διακομιστή</string>
-    <string name="auth_host_url">Διεύθυνση διακομιστή https://…</string>
+    <string name="auth_host_url">Διεύθυνση διακομιστή https://&#8230;</string>
     <string name="auth_username">Όνομα χρήστη</string>
     <string name="auth_password">Συνθηματικό</string>
     <string name="auth_register">Δεν έχετε ακόμα διακομιστή;\nΚάντε κλικ εδώ για να πάρετε έναν από ένα πάροχο</string>
@@ -84,7 +73,6 @@
     <string name="uploader_wrn_no_account_setup_btn_text">Ρύθμιση</string>
     <string name="uploader_wrn_no_account_quit_btn_text">Έξοδος</string>
     <string name="uploader_error_title_no_file_to_upload">Κανένα αρχείο για μεταφόρτωση</string>
-    <string name="uploader_error_message_received_piece_of_text">Ο %1$s δεν μπορεί να μεταφορτώσει ένα κομμάτι κειμένου ως αρχείο.</string>
     <string name="uploader_error_message_no_file_to_upload">Τα ληφθέντα δεδομένα δεν περιλαμβάνουν έγκυρο αρχείο.</string>
     <string name="uploader_error_title_file_cannot_be_uploaded">Το αρχείο δεν μπορεί να μεταφορτωθεί</string>
     <string name="uploader_error_message_read_permission_not_granted">Ο %1$s δεν επιτρέπεται να αναγνώσει ένα ληφθέν αρχείο</string>
@@ -97,7 +85,6 @@
     <string name="file_list_seconds_ago">δευτερόλεπτα πριν</string>
     <string name="file_list_empty_headline">Δεν υπάρχουν αρχεία</string>
     <string name="file_list_empty">Μεταφόρτωση περιεχομένου ή συγχρονισμός με τις συσκευές σας.</string>
-    <string name="file_list_empty_favorites">Σημειώστε ως αγαπημένα ορισμένα αρχεία ή συγχρονίστε τα με τις συσκευές σας.</string>
     <string name="file_list_empty_favorites_filter_list">Τα αρχεία ή οι φάκελοι που σημειώσατε ως αγαπημένα θα εμφανιστούν εδώ</string>
     <string name="file_list_empty_favorites_filter">Δεν βρέθηκαν αρχεία σημειωμένα ως αγαπημένα για το ερώτημά σας.</string>
     <string name="file_list_loading">Φόρτωση&#8230;</string>
@@ -112,7 +99,7 @@
     <string name="file_list_empty_headline_server_search_photos">Καμιά φωτογραφία</string>
     <string name="file_list_empty_search">Θα δοκιμάστε αναζήτηση και σε άλλο φάκελο;</string>
     <string name="file_list_empty_recently_modified">Δεν βρέθηκαν αρχεία που να έχουν τροποποιηθεί τις τελευταίες 7 ημέρες</string>
-    <string name="file_list_empty_recently_modified_filter">Δεν βρέθηκαν αρχεία για το αίτημά σας που να έχουν τροποποιηθεί τις τελευταίες 7 ημέρες.</string>
+    <string name="file_list_empty_recently_modified_filter">Η αναζήτηση δεν βρήκε κάποιο τροποποιημένο αρχείο στην περίοδο των τελευταίων 7 ημερών.</string>
     <string name="file_list_empty_recently_added">Δεν βρέθηκαν πρόσφατα προστεθημένα αρχεία</string>
     <string name="file_list_empty_recently_added_filter">Δεν βρέθηκαν πρόσφατα προστεθημένα αρχεία για το αίτημά σας.</string>
     <string name="file_list_empty_text_photos">Μεταφόρτωση μερικών φωτογραφιών ή ενεργοποιήστε την αυτόματη μεταφόρτωση.</string>
@@ -123,9 +110,6 @@
     <string name="upload_list_empty_text">Μεταφορτώστε περιεχόμενο ή ενεργοποιήστε την άμεση μεταφόρτωση.</string>
     <string name="upload_list_empty_text_auto_upload">Μεταφορτώστε περιεχόμενο ή ενεργοποιήστε την αυτόματη μεταφόρτωση.</string>
     <string name="file_list_folder">φάκελος</string>
-    <string name="file_list_folders">φάκελοι</string>
-    <string name="file_list_file">αρχείο</string>
-    <string name="file_list_files">αρχεία</string>
     <string name="filedetails_select_file">Αγγίξτε κάποιο αρχείο για να προβάλετε περισσότερες πληροφορίες.</string>
     <string name="filedetails_size">Μέγεθος:</string>
     <string name="filedetails_type">Τύπος:</string>
@@ -145,7 +129,6 @@
     <string name="common_cancel">Ακύρωση</string>
     <string name="common_back">Επιστροφή</string>
     <string name="common_save">Αποθήκευση</string>
-    <string name="common_save_exit">Αποθήκευση &amp; έξοδος</string>
     <string name="common_error">Σφάλμα</string>
     <string name="common_loading">Φόρτωση &#8230;</string>
     <string name="common_unknown">άγνωστο</string>
@@ -154,8 +137,7 @@
     <string name="about_title">Περί</string>
     <string name="change_password">Αλλαγή συνθημτικού</string>
     <string name="delete_account">Αφαίρεση λογαριασμού</string>
-    <string name="delete_account_warning">Διαγραφή λογαριασμού %s?\\n\\nΗ διαγραφή λογαριασμού δεν μπορεί να αναιρεθεί.</string>
-    <string name="create_account">Δημιουργία λογαριασμού</string>
+    <string name="delete_account_warning">Διαγραφή λογαριασμού %s με όλα τα τοπικά αρχεία?\n\n\Διαγράφοντας τα δεν θα υπάρξει επαναφορά.</string>
     <string name="upload_chooser_title">Μεταφόρτωση από &#8230;</string>
     <string name="uploader_info_dirname">Όνομα φακέλου</string>
     <string name="uploader_upload_in_progress_ticker">Μεταφόρτωση &#8230;</string>
@@ -167,7 +149,6 @@
     <string name="uploader_upload_failed_credentials_error">Η μεταφόρτωση απέτυχε, πρέπει να επανασυνδεθείτε</string>
     <string name="uploads_view_title">Μεταφορτώσεις</string>
     <string name="uploads_view_group_current_uploads">Τρέχουσα</string>
-    <string name="uploads_view_group_failed_uploads">Απέτυχε (αγγίξτε για επανάληψη)</string>
     <string name="uploads_view_group_finished_uploads">Μεταφορτώθηκε</string>
     <string name="uploads_view_upload_status_succeeded">Ολοκληρωμένες</string>
     <string name="uploads_view_upload_status_cancelled">Ακυρώθηκαν</string>
@@ -268,7 +249,7 @@
 	<string name="auth_expired_oauth_token_toast">Η πιστοποιίησή σας έληξε. Παρακαλούμε εξουσιοδοτήστε ξανά</string>
 	<string name="auth_expired_basic_auth_toast">Παρακαλούμε εισάγετε το τρέχον συνθηματικό</string>
 	<string name="auth_expired_saml_sso_token_toast">Η συνεδρία σας έληξε. Παρακαλούμε συνδεθείτε ξανά</string>
-	<string name="auth_connecting_auth_server">Σύνδεση με το διακομιστή πιστοποίησης ...</string>
+	<string name="auth_connecting_auth_server">Σύνδεση με το διακομιστή πιστοποίησης&#8230;</string>
 	<string name="auth_unsupported_auth_method">Ο διακομιστής δεν υποστηρίζει αυτή τη μέθοδο πιστοποίησης</string>
 	<string name="auth_unsupported_multiaccount">Ο %1$s  δεν υποστηρίζει πολλαπλούς λογαριασμούς</string>
 	<string name="auth_fail_get_user_name">Ο διακομιστής σας δεν επιστρέφει το σωστό αναγνωριστικό χρήστη, παρακαλούμε επικοινωνήστε τον διαχειριστή</string>
@@ -296,15 +277,15 @@
     <string name="filename_forbidden_characters">Απαγορευμένοι χαρακτήρες: / \\ &lt; &gt; : \" | ? *</string>
     <string name="filename_forbidden_charaters_from_server">Το όνομα αρχείου περιέχει έναν τουλάχιστον μη έγκυρο χαρακτήρα</string>
     <string name="filename_empty">Το όνομα αρχείου δεν μπορεί να είναι κενό</string>
-    <string name="wait_a_moment">Παρακαλούμε περιμένετε...</string>
+    <string name="wait_a_moment">Παρακαλούμε περιμένετε&#8230;</string>
     <string name="wait_checking_credentials">Γίνεται έλεγχος αποθηκευμένων διαπιστευτηρίων</string>
     <string name="filedisplay_unexpected_bad_get_content">Μη αναμενόμενο πρόβλημα, παρακαλώ ελέγξτε το αρχείο από διαφορετική εφαρμογή</string>
     <string name="filedisplay_no_file_selected">Δεν επιλέχθηκε αρχείο</string>
     <string name="activity_chooser_title">Αποστολή συνδέσμου σε &#8230;</string>
     <string name="wait_for_tmp_copy_from_private_storage">Γίνεται αντιγραφή αρχείου από ιδιωτικό αποθηκευτικό χώρο</string>
     
-    <string name="oauth_check_onoff">Σύνδεση με oAuth2</string> 
-    <string name="oauth_login_connection">Γίνεται σύνδεση στο διακομιστή oAuth2...</string>    
+    <string name="oauth_check_onoff">Σύνδεση με OAuth 2.0</string> 
+    <string name="oauth_login_connection">Γίνεται σύνδεση στο διακομιστή OAuth 2.0&#8230;</string>
         
     <string name="ssl_validator_header">Η ταυτότητα της σελίδας δεν μπορεί να επληθευτεί</string>
     <string name="ssl_validator_reason_cert_not_trusted">- Το πιστοποιητικό του διακομιστή δεν είναι έμπιστο</string>
@@ -342,12 +323,11 @@
     <string name="placeholder_media_time">12:23:45</string>
 
     <string name="auto_upload_on_wifi">Μεταφόρτωση μόνο μέσω wifi</string>
-    <string name="instant_upload_on_wifi">Μεταφόρτωση φωτογραφιών μόνο μέσω wifi</string>
     <string name="instant_video_upload_on_wifi">Μεταφόρτωση βίντεο μόνο μέσω wifi</string>
     <string name="instant_video_upload_on_charging">Μεταφόρτωση μόνο κατά τη διάρκεια φόρτισης</string>
     <string name="instant_upload_on_charging">Μεταφόρτωση μόνο κατά τη διάρκεια φόρτισης</string>
     <string name="instant_upload_path">/InstantUpload</string>
-    <string name="auto_upload_path">/Αυτόματη μεταφόρτωση</string>
+    <string name="auto_upload_path">/ΑυτόματηΜεταφόρτωση</string>
     <string name="conflict_title">Διένεξη αρχείων</string>
     <string name="conflict_message">Ποια αρχεία θέλετε να διατηρήσετε; Αν επιλέξετε και τις δύο εκδόσεις, θα προστεθεί ένας αριθμός στο όνομα του τοπικού αρχείου.</string>
     <string name="conflict_keep_both">Διατήρηση και των δύο</string>
@@ -360,8 +340,6 @@
 
     <string name="error__upload__local_file_not_copied">Το %1$s δεν μπόρεσε να αντιγραφεί στον τοπικό φάκελο %2$s</string>
     <string name="prefs_instant_upload_path_title">Φάκελος άμεσης μεταφόρτωσης</string>
-    <string name="prefs_folder_sync_local_path_title">Τοπικός φάκελος</string>
-    <string name="prefs_folder_sync_remote_path_title">Μετονομασία φακέλου</string>
     <string name="prefs_instant_upload_path_use_subfolders_title">Χρήση υποφακέλων</string>
     <string name="prefs_instant_upload_path_use_subfolders_summary">Αποθήκευση σε υποφακέλους με βάση το χρόνο και μήνα</string>
 
@@ -411,12 +389,12 @@
     <string name="file_migration_cleaning">Γίνεται εκκαθάριση&#8230;</string>
     <string name="file_migration_restoring_accounts_configuration">Γίνεται επαναφορά ρυθμίσεων λογαριασμών&#8230;</string>
     <string name="file_migration_ok_finished">Ολοκληρώθηκε</string>
-    <string name="file_migration_failed_not_enough_space">ΣΦΑΛΜΑ: Ανεπαρκής αποθηκευτικός χώρος</string>
-    <string name="file_migration_failed_not_writable">ΣΦΑΛΜΑ: Το αρχείο προορισμού δεν είναι εγγράψιμο</string>
-    <string name="file_migration_failed_not_readable">Σφάλμα: Το αρχείο προέλευσης δεν είναι αναγνώσιμο</string>
-    <string name="file_migration_failed_dir_already_exists">ΣΦΑΛΜΑ: Υπάρχει ήδη ο κατάλογος Nextcloud</string>
-    <string name="file_migration_failed_while_coping">ΣΦΑΛΜΑ: Κατά την μεταφορά</string>
-    <string name="file_migration_failed_while_updating_index">ΣΦΑΛΜΑ: Κατά την ενημέρωση ευρετηρίου</string>
+    <string name="file_migration_failed_not_enough_space">Σφάλμα: Μη επαρκής χώρος</string>
+    <string name="file_migration_failed_not_writable">Λάθος: Αρχείο προορισμού μη εγγράψιμο</string>
+    <string name="file_migration_failed_not_readable">Λάθος: Αδυναμία ανάγνωσης πηγαίου αρχείου </string>
+    <string name="file_migration_failed_dir_already_exists">Λάθος: Ο φάκελος Nextcloud υπάρχει ήδη</string>
+    <string name="file_migration_failed_while_coping">Λάθος: Αποτυχία κατά την μετάβαση</string>
+    <string name="file_migration_failed_while_updating_index">Σφάλμα: Αποτυχία ενημέρωσης ευρετηρίου</string>
 
     <string name="file_migration_directory_already_exists">Ο φάκελος δεδομένων υπάρχει ήδη. Επιλέξτε ένα από τα παρακάτω:</string>
     <string name="file_migration_override_data_folder">Αντικατάσταση</string>
@@ -425,7 +403,6 @@
     <string name="file_migration_source_not_readable_title">Ο πηγαίος φάκελος δεν ειναι αναγνώσιμος!</string>
     <string name="file_migration_source_not_readable">Θέλετε ακόμη να αλλάξετε το μονοπάτι αποθήκευσης σε %1$s;\n\nΣημείωση: όλα τα δεδομένα θα πρέπει να κατεβαστούν ξανά. </string>
 
-    <string name="prefs_category_accounts">Λογαριασμοί</string>
     <string name="prefs_add_account">Προσθήκη λογαριασμού</string>
     <string name="drawer_manage_accounts">Διαχείριση λογαριασμών</string>
     <string name="auth_redirect_non_secure_connection_title">Η ασφαλής σύνδεση ανακατευθύνεται μέσω μιας μη ασφαλούς διαδρομής.</string>
@@ -482,7 +459,7 @@
     <string name="file_list__footer__files">%1$d αρχεία</string>
     <string name="file_list__footer__files_and_folder">%1$d αρχεία, 1 φάκελος</string>
     <string name="file_list__footer__files_and_folders">%1$d αρχεία, %2$d φάκελοι</string>
-    <string name="set_picture_as">Ορισμός εικόνας ως</string>
+    <string name="set_picture_as">Χρησιμοποίησε την εικόνα ως</string>
     <string name="set_as">Ορισμός ως</string>
 
     <string name="prefs_instant_behaviour_dialogTitle">Το πρωτότυπο αρχείο θα είναι&#8230;</string>
@@ -490,6 +467,7 @@
     <string name="upload_copy_files">Αντιγραφή αρχείου</string>
     <string name="upload_move_files">Μετακίνηση αρχείου</string>
     <string name="select_all">Επιλογή όλων</string>
+    <string name="deselect_all">Αναίρεση επιλογής όλων</string>
 
     <string name="pref_behaviour_entries_keep_file">διατήρηση στον αρχικό φάκελο</string>
     <string name="pref_behaviour_entries_move">μετακινήθηκε στον φάκελο εφαρμογών</string>
@@ -521,6 +499,9 @@
     <string name="share_known_remote_clarification">%1$s ( στο %2$s )</string>
 
     <string name="share_sharee_unavailable">Δεν επιτρέπεται ο διαμοιρασμός μεταξύ χρηστών μέσω πελατών, σε αυτή την έκδοση διακομιστή. \nΕπικοινωνήστε με το διαχειριστή</string>
+    <string name="filedetails_share_link_enable">Ο διαμοιρασμός με link ενεργοποιήθηκε</string>
+    <string name="filedetails_share_link_disable">Μη διαμοιρασμένο με link</string>
+    <string name="filedetails_share_users_with_access">Χρήστες και ομάδες με δικαιώματα πρόσβασης</string>
     <string name="share_privilege_can_share">δυνατότητα διαμοιρασμού</string>
     <string name="share_privilege_can_edit">δυνατότητα επεξεργασίας</string>
     <string name="share_privilege_can_edit_create">δημιουργία</string>
@@ -529,11 +510,7 @@
     <string name="edit_share_unshare">Διακοπή διαμοιρασμού</string>
     <string name="edit_share_done">ολοκληρώθηκε</string>
 
-    <string name="action_retry_uploads">Αποτυχία επανάληψης</string>
-    <string name="action_clear_failed_uploads">Αποτυχία εκκαθάρισης</string>
-    <string name="action_clear_successful_uploads">Επιτυχία εκκαθάρισης</string>
     <string name="action_clear_finished_uploads">Ολοκλήρωση εκκαθάρισης όλων</string>
-
     <string name="action_switch_grid_view">Προβολή πλέγματος</string>
     <string name="action_switch_list_view">Προβολή λίστας</string>
 
@@ -547,35 +524,28 @@
     <string name="confirmation_remove_files_alert">Θέλετε να αφαιρέσετε τα επιλεγμένα αντικείμενα;</string>
     <string name="confirmation_remove_folders_alert">Θέλετε να αφαιρέσετε τα επιλεγμένα αντικείμενα με τα περιεχόμενά τους;</string>
     <string name="maintenance_mode">Ο διακομιστής είναι σε κατάσταση συντήρησης</string>
-
     <string name="uploads_view_upload_status_waiting_for_charging">Αναμονή για φόρτιση συσκευής</string>
     <string name="actionbar_search">Αναζήτηση</string>
     <string name="files_drop_not_supported">Αυτό είναι χαρακτηριστικό του Nextcloud, παρακαλούμε ενημερώστε.</string>
     <string name="learn_more">Μάθετε περισσότερα</string>
-    <string name="drawer_folder_sync">Αυτόματη μεταφόρτωση</string>
     <string name="drawer_participate">Συμμετοχή</string>
     <string name="participate_testing_headline">Βοηθήστε μας στις δοκιμές</string>
     <string name="participate_testing_bug_text">Βρήκατε σφάλμα; Κάτι σας φαίνεται παράξενο;</string>
-    <string name="participate_testing_report_text">Αναφέρετε σφάλμα στο Github</string>
+    <string name="participate_testing_report_text">Αναφορά προβλήματος στο GitHub</string>
     <string name="participate_testing_version_text">Σας ενδιαφέρει να μας βοηθήσετε να δοκιμάσουμε την επόμενη έκδοση;</string>
     <string name="participate_beta_headline">Δοκιμή της εκδοσης προς ανάπτυξη</string>
     <string name="participate_beta_text">Αυτή περιέχει όλες τις επερχόμενες λειτουργίες και δαθέτει ότι τελευταίο έχει ενσωματωθεί. Σφάλματα/λάθη μπορεί να προκύψουν. Σας παρακαλούμε να μας τα αναφέρετε.</string>
     <string name="participate_release_candidate_headline">Release candidate</string>
-    <string name="participate_release_candidate_text">Η υποψήφια κυκλοφορία (RC) είναι ένα στιγμιότυπο της επερχόμενης έκδοσης και αναμένεται να είναι σταθερή. Η δοκιμή της μεμονωμένης εγκατάστασής σας θα βοηθήσει στην εξασφάλιση αυτού. Εγγραφείτε για δοκιμές στο Play store ή χειροκίνητα αναζητείστε στο τμήμα \"εκδόσεις\" στο F-Droid.</string>
+    <string name="participate_release_candidate_text">Η υποψήφια έκδοση (RC) είναι ένα στιγμιότυπο της επερχόμενης έκδοσης και να αναμένεται να είναι σταθερή. Δοκιμάζοντας τις προσωπικές σας ρυθμίσεις μπορεί να βοηθήσει στην διασφάλιση της έκδοσης. Δηλώστε υποψηφιότητα δοκιμής στο Play store ή αναζητήστε χειροκίνητα στον τομέα \"εκδόσεων\" στο F-Droid.</string>
     <string name="participate_contribute_headline">Ενεργή συνεισφορά</string>
-    <string name="participate_contribute_irc_text">Συμμετέχετε στη συνομιλία στο IRC: &lt;a href=\"%1$s\">#nextcloud-mobile&lt;/a></string>
-    <string name="participate_contribute_forum_text">Βοηθήστε χρήστες στο &lt;a href=\"%1$s\">forum&lt;/a></string>
-    <string name="participate_contribute_translate_text">&lt;a href=\"%1$s\">Μεταφράστε&lt;/a> την εφαρμογή</string>
-    <string name="participate_contribute_github_text">Συνεισφέρετε ως προγραμματιστής, για περισσότερες λεπτομέρειες δείτε &lt;a href=\"%1$s\">CONTRIBUTING.md&lt;/a></string>
+    <string name="participate_contribute_irc_text">Μπείτε για chat στο IRC:</string>
+    <string name="participate_contribute_forum_text">Βοηθήστε τους άλλους σε</string>
+    <string name="participate_contribute_forum_forum">forum</string>
+    <string name="participate_contribute_translate_translate">Μετάφραση</string>
+    <string name="participate_contribute_translate_text">η εφαρμογή</string>
+    <string name="participate_contribute_github_text">Επιθεωρήστε, τροποποιήστε και γράψτε κώδικα, δείτε %1$s για λεπτομέρειες</string>
     <string name="move_to">Μετακίνηση σε&#8230;</string>
     <string name="copy_to">Αντιγραφή σε&#8230;</string>
-    <string name="choose_remote_folder">Επιλογή φακέλου&#8230;</string>
-    <string name="folder_sync_loading_folders">Φόρτωση φακέλων&#8230;</string>
-    <string name="folder_sync_no_results">Δεν βρέθηκαν φάκελοι πολυμέσων.</string>
-    <string name="folder_sync_preferences">Προτιμήσεις αυτόματης μεταφόρτωσης</string>
-    <string name="folder_sync_settings">Ρυθμίσεις</string>
-    <string name="folder_sync_new_info">Η άμεση μεταφόρτωση έχει ανανεωθεί τελείως. Παρακαλούμε δείτε το κυρίως μενού και ρυθμίστε ξανά την αυτόματη μεταφόρτωση. Σας ζητούμε συγγνώμη για την ενόχληση\n\nΑπολαύστε τις νέες και εκτεταμένες δυνατότητες της αυτόματης μεταφόρτωσης!</string>
-    <string name="folder_sync_preferences_folder_path">Για %1$s</string>
     <plurals name="items_selected_count">
         <item quantity="one">%d επιλέχθηκε</item>
         <item quantity="other">%d επιλέχθηκαν</item>
@@ -600,7 +570,7 @@
     <string name="storage_description_unknown">Άγνωστο</string>
 
     <!-- What's new feature and texts to show -->
-    <string name="whats_new_title">Τι νέο υπάρχει στο Nextcloud</string>
+    <string name="whats_new_title">Τι νέο υπάρχει στο %1$s</string>
 
     <!-- Welcome to Nc intro features -->
     <string name="welcome_feature_1_title">Μια ασφαλής τοποθεσία για όλα σας τα δεδομένα</string>
@@ -609,7 +579,6 @@
     <string name="welcome_feature_2_title">Πολλαπλός λογαριασμός</string>
     <string name="welcome_feature_2_text">Σύνδεση με όλα τα clouds σας</string>
 
-    <string name="welcome_feature_3_title">Άμεση μεταφόρτωση</string>
     <string name="welcome_feature_3_text">Διατήρηση των φωτογραφιών σας με ασφάλεια</string>
 
     <string name="whats_new_skip">Παράλειψη</string>
@@ -633,13 +602,10 @@
     <string name="webview_error">Παρουσιάστηκε σφάλμα</string>
     <string name="prefs_category_about">Περί</string>
 
-    <string name="actionbar_contacts">Αντίγραφο ασφαλείας επαφών</string>
+    <string name="actionbar_contacts">Εφεδρικό αντίγραφο επαφών</string>
     <string name="actionbar_contacts_restore">Ανάκτηση επαφών</string>
-    <string name="contacts_backup_button">Αντίγραφο ασφαλείας τώρα</string>
-    <string name="contacts_restore_button">Επαναφορά τελευταίου αντιγράφου ασφαλείας</string>
-    <string name="contacts_header_restore">Επαναφορά</string>
-    <string name="contacts_header_backup">Αντίγραφο ασφαλείας</string>
-    <string name="contacts_automatic_backup">Αντίγραφο ασφαλείας επαφών</string>
+    <string name="contacts_backup_button">Εφεδρικό αντίγραφο τώρα</string>
+    <string name="contacts_automatic_backup">Αυτόματο εφεδρικό αντίγραφο</string>
     <string name="contacts_last_backup">Τελευταίο αντίγραφο ασφαλείας</string>
     <string name="contacts_read_permission">Απαιτείτούνται δικαιώματα ανάγνωσης για τις επαφές</string>
     <string name="contacts_write_permission">Απαιτείτούνται δικαιώματα εγγραφής για τις επαφές</string>
@@ -657,9 +623,9 @@
     <!-- Notifications -->
     <string name="new_notification_received">Νέα ενημέρωση ελήφθη </string>
     <string name="drawer_logout">Έξοδος</string>
+    <string name="picture_set_as_no_app">Δεν εντοπίστηκε εφαρμογή για συσχετισμό εικόνας!</string>
     <string name="privacy">Ιδιωτικότητα</string>
     <string name="file_not_found">Δεν βρέθηκε το αρχείο!</string>
 
-    <string name="folder_sync_folders">Ρύθμιση φακέλων</string>
-
-  </resources>
+    <string name="test_server_button">Δοκιμή σύνδεσης με διακομιστή</string>
+    </resources>

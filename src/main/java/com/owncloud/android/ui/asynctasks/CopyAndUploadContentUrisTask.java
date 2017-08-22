@@ -228,7 +228,9 @@ public class CopyAndUploadContentUrisTask extends AsyncTask<Object, Void, Result
             behaviour,
             mimeType,
             false,      // do not create parent folder if not existent
-            UploadFileOperation.CREATED_BY_USER
+            UploadFileOperation.CREATED_BY_USER,
+            false,
+             false
         );
     }
 
@@ -255,6 +257,7 @@ public class CopyAndUploadContentUrisTask extends AsyncTask<Object, Void, Result
                         break;
                     default:
                         messageId = R.string.common_error_unknown;
+                        break;
                 }
                 String message = String.format(
                     mAppContext.getString(messageId),
