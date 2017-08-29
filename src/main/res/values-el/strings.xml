@@ -255,8 +255,6 @@
 	<string name="auth_fail_get_user_name">Ο διακομιστής σας δεν επιστρέφει το σωστό αναγνωριστικό χρήστη, παρακαλούμε επικοινωνήστε τον διαχειριστή</string>
 	<string name="auth_can_not_auth_against_server">Αδυαμία πιστοποίησης με αυτόν το διακομιστή</string>
     <string name="auth_account_does_not_exist">Ο λογαριασμός δεν υπάρχει ακόμα στη συσκευή</string>
-
-
     <string name="favorite">Ορισμός ως διαθέσιμο εκτός σύνδεσης</string>
     <string name="unfavorite">Αναίρεση ορισμού ως διαθέσιμο εκτός σύνδεσης</string>
     <string name="favorite_real">Ορισμός ως αγαπημένο</string>
@@ -323,7 +321,6 @@
     <string name="placeholder_media_time">12:23:45</string>
 
     <string name="auto_upload_on_wifi">Μεταφόρτωση μόνο μέσω wifi</string>
-    <string name="instant_video_upload_on_wifi">Μεταφόρτωση βίντεο μόνο μέσω wifi</string>
     <string name="instant_video_upload_on_charging">Μεταφόρτωση μόνο κατά τη διάρκεια φόρτισης</string>
     <string name="instant_upload_on_charging">Μεταφόρτωση μόνο κατά τη διάρκεια φόρτισης</string>
     <string name="instant_upload_path">/InstantUpload</string>

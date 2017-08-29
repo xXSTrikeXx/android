@@ -264,8 +264,6 @@
 	<string name="auth_fail_get_user_name">Dein Server gibt keine korrekte Benutzer-ID zurück, bitte kontaktiere einen Administrator</string>
 	<string name="auth_can_not_auth_against_server">Kann sich nicht auf diesem Server authentifizieren</string>
     <string name="auth_account_does_not_exist">Das Benutzerkonto ist bis jetzt noch nicht auf dem Gerät vorhanden</string>
-
-
     <string name="favorite">Als Offline verfügbar markieren</string>
     <string name="unfavorite">Offline verfügbar Markierung entfernen</string>
     <string name="favorite_real">Als Favorit markieren</string>
@@ -332,7 +330,6 @@
     <string name="placeholder_media_time">12:23:45</string>
 
     <string name="auto_upload_on_wifi">Nur über W-Lan hochladen</string>
-    <string name="instant_video_upload_on_wifi">Videos nur über W-Lan hochladen</string>
     <string name="instant_video_upload_on_charging">Nur während des Ladens hochladen</string>
     <string name="instant_upload_on_charging">Nur während des Ladens hochladen</string>
     <string name="instant_upload_path">/SofortUpload</string>
@@ -681,4 +678,4 @@
     <string name="resharing_is_not_allowed">Resharing/Wiederteilen ist nicht erlaubt.</string>
     <string name="whats_new_fingerprint_title">Entsperren mit Fingerabdruck</string>
     <string name="whats_new_fingerprint_content">Entsperre die App mit Deinem Fingerabdruck</string>
-</resources>
+    </resources>

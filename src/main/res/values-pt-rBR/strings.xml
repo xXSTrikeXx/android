@@ -263,8 +263,6 @@
 	<string name="auth_fail_get_user_name">Seu servidor não está retornando um ID correto de usuário. Por favor, contacte o administrador</string>
 	<string name="auth_can_not_auth_against_server">Não foi possível obter autenticação neste servidor</string>
     <string name="auth_account_does_not_exist">A conta ainda não existe no dispositivo</string>
-
-
     <string name="favorite">Definir como disponível offline</string>
     <string name="unfavorite">Definir como não disponível offline</string>
     <string name="favorite_real">Marque como favorito</string>
@@ -331,7 +329,6 @@
     <string name="placeholder_media_time">12:23:45</string>
 
     <string name="auto_upload_on_wifi">Somente enviar por Wi-Fi</string>
-    <string name="instant_video_upload_on_wifi">Somente enviar vídeos por Wi-Fi</string>
     <string name="instant_video_upload_on_charging">Somente enviar quando carregando</string>
     <string name="instant_upload_on_charging">Somente enviar quando carregando</string>
     <string name="instant_upload_path">/EnvioAutomático</string>
@@ -679,4 +676,4 @@
     <string name="resharing_is_not_allowed">Recompartilhamento não é permitido</string>
     <string name="whats_new_fingerprint_title">Desbloquear com as digitais</string>
     <string name="whats_new_fingerprint_content">Usar as digitais para desbloquear o aplicativo</string>
-</resources>
+    </resources>

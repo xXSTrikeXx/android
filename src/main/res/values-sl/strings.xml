@@ -247,8 +247,6 @@
 	</string>
 	<string name="auth_can_not_auth_against_server">Povezave s strežnikom ni mogoče overiti</string>
     <string name="auth_account_does_not_exist">Račun na napravi še ne obstaja</string>
-
-
     <string name="favorite">Nastavi dosegljivost brez povezave</string>
     <string name="unfavorite">Odstrani dosegljivost brez povezave</string>
     <string name="favorite_real">Nastavi kot priljubljeno</string>
@@ -315,7 +313,6 @@
     <string name="placeholder_media_time">12:23:45</string>
 
     <string name="auto_upload_on_wifi">Nalagaj samo na WiFi-ju</string>
-    <string name="instant_video_upload_on_wifi">Naloži samo posnetke na WiFi-ju</string>
     <string name="instant_video_upload_on_charging">Nalagaj samo med polnjenjem</string>
     <string name="instant_upload_on_charging">Nalagaj samo med polnjenjem</string>
     <string name="instant_upload_path">/Hipno nalaganje</string>
