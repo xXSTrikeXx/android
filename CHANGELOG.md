@@ -1,3 +1,16 @@
+## 2017-09-06 00:31
+New branches:
+/
+
+Updated branches:
+-Dev branch was updated successfully] updated
+- Master (nextcloud/master) [https://github.com/nextcloud/android] updated
+
+Conflicting branches:
+- Further Codacy fixes (nextcloud/codacyFixes) [https://github.com/nextcloud/android/pull/1357] conflicting
+- Error feedback improvement (nextcloud/errorFeedback) [https://github.com/nextcloud/android/pull/1198] conflicting
+- Resized images (nextcloud/resizedImages) [https://github.com/nextcloud/android/pull/69] conflicting
+
 ## 2017-09-05 00:32
 New branches:
 /
