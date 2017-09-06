@@ -228,7 +228,11 @@ public class ExpandableUploadListAdapter extends BaseExpandableListAdapter imple
 
             // file size
             TextView fileSizeTextView = (TextView) view.findViewById(R.id.upload_file_size);
-            fileSizeTextView.setText(DisplayUtils.bytesToHumanReadable(upload.getFileSize()) + ", ");
+            if (upload.getFileSize() != 0) {
+                fileSizeTextView.setText(DisplayUtils.bytesToHumanReadable(upload.getFileSize()) + ", ");
+            } else {
+                fileSizeTextView.setText("");
+            }
 
             //* upload date
             TextView uploadDateTextView = (TextView) view.findViewById(R.id.upload_date);
@@ -260,6 +264,7 @@ public class ExpandableUploadListAdapter extends BaseExpandableListAdapter imple
             /// Reset fields visibility
             uploadDateTextView.setVisibility(View.VISIBLE);
             pathTextView.setVisibility(View.VISIBLE);
+
             fileSizeTextView.setVisibility(View.VISIBLE);
             accountNameTextView.setVisibility(View.VISIBLE);
             statusTextView.setVisibility(View.VISIBLE);
