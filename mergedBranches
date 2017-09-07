@@ -3,6 +3,9 @@ nextcloud/bugfix-454
 nextcloud/codacyFixes
 nextcloud/dev-base
 nextcloud/errorDuringDbUpgrade
+nextcloud/fixLegacySDKUse
+nextcloud/fixLibVersionLintWarnings
 nextcloud/folderObserver
 nextcloud/master
+nextcloud/removeUnusedCode
 nextcloud/untrustedCerts
