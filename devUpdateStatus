@@ -1,4 +1,4 @@
-2017-09-12 00:31:16
+2017-09-13 00:32:04
 Branches: 12
 [01 / 12] Lint: fix Obsolete SDK_INT Version Check (nextcloud/fixLegacySDKUse) [https://github.com/nextcloud/android/pull/1507] CONFLICT
 [02 / 12] Lint: fix UnknownIdInLayout: use correct reference to an id that is in the current layout (nextcloud/fixLayoutIds) [https://github.com/nextcloud/android/pull/1506] CONFLICT
