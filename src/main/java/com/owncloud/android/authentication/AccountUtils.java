@@ -41,7 +41,6 @@ import com.owncloud.android.lib.resources.status.OwnCloudVersion;
 import com.owncloud.android.lib.resources.users.GetRemoteUserInfoOperation;
 import com.owncloud.android.operations.GetCapabilitiesOperarion;
 import com.owncloud.android.ui.activity.ManageAccountsActivity;
-import com.owncloud.android.operations.GetCapabilitiesOperarion;
 
 import java.util.Locale;
 

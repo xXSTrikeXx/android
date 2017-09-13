@@ -39,7 +39,6 @@ import android.widget.Toast;
 
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
-import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.authentication.AuthenticatorActivity;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.files.services.FileDownloader;
@@ -158,15 +157,6 @@ public abstract class FileActivity extends DrawerActivity
             mFromNotification = getIntent().getBooleanExtra(FileActivity.EXTRA_FROM_NOTIFICATION,
                     false);
         }
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // best place, before any access to AccountManager or database
-                AccountUtils.updateAccountVersion(getApplicationContext());
-            }
-        });
-        t.start();
 
         setAccount(account, savedInstanceState != null);
 
