@@ -1,3 +1,21 @@
+## 2017-09-13 00:33
+New branches:
+/
+
+Updated branches:
+
+Conflicting branches:
+- Lint: fix Obsolete SDK_INT Version Check (nextcloud/fixLegacySDKUse) [https://github.com/nextcloud/android/pull/1507] conflicting
+- Lint: fix UnknownIdInLayout: use correct reference to an id that is in the current layout (nextcloud/fixLayoutIds) [https://github.com/nextcloud/android/pull/1506] conflicting
+- Lint: Add Plural strings (nextcloud/pluralStrings) [https://github.com/nextcloud/android/pull/1503] conflicting
+- Codacy: remove unused code (nextcloud/removeUnusedCode) [https://github.com/nextcloud/android/pull/1497] conflicting
+- Update libs to latest versions to satisfy lint (nextcloud/fixLibVersionLintWarnings) [https://github.com/nextcloud/android/pull/1459] conflicting
+- Codacy: fix further issues (nextcloud/codacyFixes) [https://github.com/nextcloud/android/pull/1357] conflicting
+- Error feedback improvement (nextcloud/errorFeedback) [https://github.com/nextcloud/android/pull/1198] conflicting
+- Search inside of text files (nextcloud/bugfix-454) [https://github.com/nextcloud/android/pull/565] conflicting
+- Resized images (nextcloud/resizedImages) [https://github.com/nextcloud/android/pull/69] conflicting
+- Master (nextcloud/master) [https://github.com/nextcloud/android] conflicting
+
 ## 2017-09-12 00:31
 New branches:
 /
