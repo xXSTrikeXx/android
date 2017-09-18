@@ -1,15 +1,15 @@
-2017-09-18 00:33:25
+2017-09-18 08:18:20
 Branches: 12
 Dev branch was updated successfully
-[01 / 12] Lint: fix Obsolete SDK_INT Version Check (nextcloud/fixLegacySDKUse) [https://github.com/nextcloud/android/pull/1507] merged successfully
+[01 / 12] Lint: fix Obsolete SDK_INT Version Check (nextcloud/fixLegacySDKUse) [https://github.com/nextcloud/android/pull/1507] no update needed
 [02 / 12] Lint: fix UnknownIdInLayout: use correct reference to an id that is in the current layout (nextcloud/fixLayoutIds) [https://github.com/nextcloud/android/pull/1506] CONFLICT
 [03 / 12] Lint: Add Plural strings (nextcloud/pluralStrings) [https://github.com/nextcloud/android/pull/1503] CONFLICT
-[04 / 12] Codacy: remove unused code (nextcloud/removeUnusedCode) [https://github.com/nextcloud/android/pull/1497] merged successfully
+[04 / 12] Codacy: remove unused code (nextcloud/removeUnusedCode) [https://github.com/nextcloud/android/pull/1497] no update needed
 [05 / 12] Update libs to latest versions to satisfy lint (nextcloud/fixLibVersionLintWarnings) [https://github.com/nextcloud/android/pull/1459] CONFLICT
 [06 / 12] Codacy: fix further issues (nextcloud/codacyFixes) [https://github.com/nextcloud/android/pull/1357] CONFLICT
 [07 / 12] Error feedback improvement (nextcloud/errorFeedback) [https://github.com/nextcloud/android/pull/1198] CONFLICT
-[08 / 12] Comment out adding all new downloaded files to folder observer (nextcloud/folderObserver) [https://github.com/nextcloud/android/pull/1155] merged successfully
-[09 / 12] Search inside of text files (nextcloud/bugfix-454) [https://github.com/nextcloud/android/pull/565] merged successfully
+[08 / 12] Comment out adding all new downloaded files to folder observer (nextcloud/folderObserver) [https://github.com/nextcloud/android/pull/1155] no update needed
+[09 / 12] Search inside of text files (nextcloud/bugfix-454) [https://github.com/nextcloud/android/pull/565] no update needed
 [10 / 12] Resized images (nextcloud/resizedImages) [https://github.com/nextcloud/android/pull/69] CONFLICT
-[11 / 12] Master (nextcloud/master) [https://github.com/nextcloud/android] no update needed
+[11 / 12] Master (nextcloud/master) [https://github.com/nextcloud/android] CONFLICT
 [12 / 12] Dev base (nextcloud/dev-base) [https://github.com/nextcloud/android/tree/dev-base] no update needed
