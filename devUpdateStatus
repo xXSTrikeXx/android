@@ -1,7 +1,7 @@
-2017-09-19 00:37:33
+2017-09-20 00:31:52
 Branches: 12
 Dev branch was updated successfully
-[01 / 12] Lint: fix Obsolete SDK_INT Version Check (nextcloud/fixLegacySDKUse) [https://github.com/nextcloud/android/pull/1507] merged successfully
+[01 / 12] Lint: fix Obsolete SDK_INT Version Check (nextcloud/fixLegacySDKUse) [https://github.com/nextcloud/android/pull/1507] CONFLICT
 [02 / 12] Lint: fix UnknownIdInLayout: use correct reference to an id that is in the current layout (nextcloud/fixLayoutIds) [https://github.com/nextcloud/android/pull/1506] CONFLICT
 [03 / 12] Lint: Add Plural strings (nextcloud/pluralStrings) [https://github.com/nextcloud/android/pull/1503] CONFLICT
 [04 / 12] Codacy: remove unused code (nextcloud/removeUnusedCode) [https://github.com/nextcloud/android/pull/1497] merged successfully
