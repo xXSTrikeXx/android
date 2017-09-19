@@ -32,7 +32,6 @@ import android.app.FragmentManager;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -62,7 +61,6 @@ import com.owncloud.android.authentication.AccountUtils;
 import com.owncloud.android.authentication.AuthenticatorActivity;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.PushConfigurationState;
-import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.lib.common.UserInfo;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
 import com.owncloud.android.lib.common.operations.RemoteOperationResult;
@@ -302,10 +300,9 @@ public class UserInfoActivity extends FileActivity {
                             .error(R.drawable.background)
                             .crossFade()
                             .into(target);
-                } else if (!background.isEmpty()) {
+                } else {
                     // plain color
-                    int color = Color.parseColor(background);
-                    appBar.setBackgroundColor(color);
+                    appBar.setBackgroundColor(ThemeUtils.primaryColor(account));
                 }
             }
         }
@@ -408,10 +405,6 @@ public class UserInfoActivity extends FileActivity {
                                     ContactsPreferenceActivity.cancelContactBackupJobForAccount(getActivity(), account);
 
                                     ContentResolver contentResolver = getActivity().getContentResolver();
-                                    // delete all synced folder for an account
-                                    SyncedFolderProvider syncedFolderProvider = new SyncedFolderProvider(
-                                            contentResolver);
-                                    syncedFolderProvider.deleteSyncFoldersForAccount(account);
 
                                     // disable daily backup
                                     ArbitraryDataProvider arbitraryDataProvider = new ArbitraryDataProvider(
@@ -420,7 +413,6 @@ public class UserInfoActivity extends FileActivity {
                                     arbitraryDataProvider.storeOrUpdateKeyValue(account.name,
                                             ContactsPreferenceActivity.PREFERENCE_CONTACTS_AUTOMATIC_BACKUP,
                                             "false");
-
 
                                     String arbitraryDataPushString;
 
