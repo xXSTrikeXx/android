@@ -341,9 +341,10 @@
     <string name="conflict_use_local_version">versão local</string>
     <string name="conflict_use_server_version">versão do servidor</string>
 
-    <string name="preview_sorry">Desculpe.</string>
+    <string name="preview_sorry">Desculpe</string>
     <string name="preview_image_description">Pré-visualização da imagem</string>
     <string name="preview_image_error_unknown_format">Não foi possível mostrar a imagem</string>
+    <string name="preview_image_error_no_local_file">Não há arquivos locais para mostrar</string>
 
     <string name="error__upload__local_file_not_copied">%1$s não pôde ser copiado para pasta local %2$s</string>
     <string name="prefs_instant_upload_path_title">Pasta de envio automático</string>
@@ -637,6 +638,7 @@
     <string name="user_info_twitter">Twitter</string>
 
     <string name="user_information_description">Informação do usuário</string>
+    <string name="user_information_retrieval_error">Erro ao recuperar informação do usuário</string>
 
     <!-- Activities -->
     <string name="activities_no_results_headline">Nenhuma atividade ainda</string>
@@ -680,4 +682,8 @@
     <string name="whats_new_fingerprint_content">Usar as digitais para desbloquear o aplicativo</string>
     <string name="fallback_weblogin_back">VOLTAR</string>
     <string name="fallback_weblogin_text">Voltar ao método de login antigo</string>
-</resources>
+
+    <string name="foreground_service_upload">Atualizando arquivos&#8230;</string>
+    <string name="foreground_service_download">Baixando arquivos&#8230;</string>
+
+    </resources>

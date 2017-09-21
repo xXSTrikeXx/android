@@ -329,7 +329,6 @@
     <string name="preview_sorry">很抱歉</string>
     <string name="preview_image_description">圖片預覽</string>
     <string name="preview_image_error_unknown_format">無法顯示圖像</string>
-
     <string name="error__upload__local_file_not_copied">%1$s 無法被複製到本地資料夾 %2$s</string>
     <string name="prefs_instant_upload_path_title">即時上傳資料夾</string>
     <string name="prefs_instant_upload_path_use_subfolders_title">使用子資料夾</string>
@@ -538,6 +537,8 @@
     <string name="storage_description_default">預設</string>
     <string name="storage_description_sd_no">SD 卡 %1$d</string>
     <string name="storage_description_unknown">未知</string>
+
+    <string name="prefs_category_about">關於</string>
 
     <string name="contacts_backup_button">立刻備份</string>
     <string name="drawer_logout">登出</string>

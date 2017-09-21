@@ -341,10 +341,9 @@
     <string name="conflict_use_local_version">versionin vendor</string>
     <string name="conflict_use_server_version">versionin e shërbyesit</string>
 
-    <string name="preview_sorry">Më vjen keq.</string>
+    <string name="preview_sorry">Më vjen keq</string>
     <string name="preview_image_description">Parapamje figure</string>
     <string name="preview_image_error_unknown_format">Kjo figurë nuk mund të shfaqet</string>
-
     <string name="error__upload__local_file_not_copied">%1$s s\’u kopjua dot te dosja vendore %2$s</string>
     <string name="prefs_instant_upload_path_title">Dosja e ngarkimit të çastit </string>
     <string name="prefs_synced_folders_local_path_title">Dosje lokale</string>
@@ -637,7 +636,6 @@
     <string name="user_info_twitter">Twitter</string>
 
     <string name="user_information_description">Informacioni i përdoruesit</string>
-
     <!-- Activities -->
     <string name="activities_no_results_headline">Akoma asnjë aktivitet</string>
     <string name="activities_no_results_message">Ky burim do të tregoj eventet si\nshtimet, ndryshimet dhe ndarjet</string>
@@ -680,4 +678,5 @@
     <string name="whats_new_fingerprint_content">Përdorni gjurmët e gishtave tuaj për të zhbllokuar aplikacionin</string>
     <string name="fallback_weblogin_back">PRAPA</string>
     <string name="fallback_weblogin_text">Kthehu në metodën e vjetër të hyrjes</string>
-</resources>
+
+    </resources>
