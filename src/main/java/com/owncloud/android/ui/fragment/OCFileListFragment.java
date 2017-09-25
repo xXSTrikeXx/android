@@ -341,11 +341,11 @@ public class OCFileListFragment extends ExtendedListFragment implements OCFileLi
         }
 
         searchEvent = Parcels.unwrap(getArguments().getParcelable(OCFileListFragment.SEARCH_EVENT));
-        if (searchEvent != null && searchFragment && savedInstanceState == null) {
+        prepareCurrentSearch(searchEvent);
+        if (searchEvent != null && savedInstanceState == null) {
             onMessageEvent(searchEvent);
         }
 
-        prepareCurrentSearch(searchEvent);
         setTitle();
 
     }
@@ -1533,12 +1533,16 @@ public class OCFileListFragment extends ExtendedListFragment implements OCFileLi
                         }
 
                         final FileDisplayActivity fileDisplayActivity = (FileDisplayActivity) getActivity();
-                        fileDisplayActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                fileDisplayActivity.setIndeterminate(false);
-                            }
-                        });
+                        if (fileDisplayActivity != null) {
+                            fileDisplayActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (fileDisplayActivity != null) {
+                                        fileDisplayActivity.setIndeterminate(false);
+                                    }
+                                }
+                            });
+                        }
                     }
 
                     return remoteOperationResult.isSuccess();
@@ -1555,8 +1559,7 @@ public class OCFileListFragment extends ExtendedListFragment implements OCFileLi
             }
         };
 
-        remoteOperationAsyncTask.execute(true);
-
+        remoteOperationAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, true);
     }
 
     private void setTitle(@StringRes final int title) {
