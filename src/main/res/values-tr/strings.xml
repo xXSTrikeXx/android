@@ -31,7 +31,7 @@
     <string name="drawer_item_videos">Görüntüler</string>
     <string name="drawer_item_settings">Ayarlar</string>
     <string name="drawer_item_uploads_list">Yüklemeler</string>
-    <string name="drawer_item_activities">İşlemler</string>
+    <string name="drawer_item_activities">Etkinlikler</string>
     <string name="drawer_item_notifications">Bildirimler</string>
     <string name="drawer_quota">%1$s / %2$s kullanıldı</string>
 	<string name="drawer_close">Kapat</string>
@@ -84,7 +84,7 @@
     <string name="uploader_upload_files_behaviour_move_to_nextcloud_folder">Dosya Nextcloud klasörüne taşınsın</string>
     <string name="uploader_upload_files_behaviour_only_upload">Dosya kaynak klasörde tutulsun</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Dosya kaynak klasörden silinsin</string>
-    <string name="file_list_seconds_ago">saniye önce</string>
+    <string name="file_list_seconds_ago">saniyeler önce</string>
     <string name="file_list_empty_headline">Burada herhangi bir dosya yok</string>
     <string name="folder_list_empty_headline">Burada herhangi bir klasör yok</string>
     <string name="file_list_empty">Bazı içerikler yükleyin ya da aygıtlarınızla eşitleyin.</string>
@@ -266,6 +266,7 @@
     <string name="unfavorite">Çevrimdışı kullanılabilir işaretini kaldır</string>
     <string name="favorite_real">Sık Kullanılanlara Ekle</string>
     <string name="unset_favorite_real">Sık Kullanılanlardan Çıkar</string>
+    <string name="favorite_switch">Çevrimdışı kullanılabilir</string>
     <string name="common_rename">Yeniden adlandır</string>
     <string name="common_remove">Sil</string>
     <string name="confirmation_remove_file_alert">%1$s silinsin mi?</string>
